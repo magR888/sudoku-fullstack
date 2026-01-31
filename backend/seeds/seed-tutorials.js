@@ -2,15 +2,31 @@
  * SEED-TUTORIALS.JS - Seed Sample Tutorial Data
  */
 
+// Load environment variables
+require('dotenv').config();
+
 const { Pool } = require('pg');
+
+// Verify password is loaded
+if (!process.env.DB_PASSWORD) {
+    console.error('❌ ERROR: DB_PASSWORD not set in .env file!');
+    console.log('Please create .env file with:');
+    console.log('DB_PASSWORD=your_password_here');
+    process.exit(1);
+}
 
 const pool = new Pool({
     host: process.env.DB_HOST || 'localhost',
-    port: process.env.DB_PORT || 5432,
+    port: parseInt(process.env.DB_PORT) || 5432,
     user: process.env.DB_USER || 'postgres',
-    password: process.env.DB_PASSWORD,
+    password: String(process.env.DB_PASSWORD), // Ensure it's a string
     database: process.env.DB_NAME || 'sudoku_learning_platform',
 });
+
+console.log('🔌 Connecting to database...');
+console.log(`   Host: ${process.env.DB_HOST || 'localhost'}`);
+console.log(`   Database: ${process.env.DB_NAME || 'sudoku_learning_platform'}`);
+console.log(`   User: ${process.env.DB_USER || 'postgres'}`);
 
 const tutorials = [
     {

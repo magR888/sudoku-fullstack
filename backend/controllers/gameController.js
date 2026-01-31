@@ -205,6 +205,163 @@ const makeMove = async (req, res) => {
 };
 
 // Get hint
+// Helper function to get possible values for a cell
+function getPossibleValues(grid, row, col) {
+    const used = new Set();
+
+    // Check row
+    for (let c = 0; c < 9; c++) {
+        if (grid[row][c] !== 0) {
+            used.add(grid[row][c]);
+        }
+    }
+
+    // Check column
+    for (let r = 0; r < 9; r++) {
+        if (grid[r][col] !== 0) {
+            used.add(grid[r][col]);
+        }
+    }
+
+    // Check 3x3 box
+    const boxRow = Math.floor(row / 3) * 3;
+    const boxCol = Math.floor(col / 3) * 3;
+    for (let r = boxRow; r < boxRow + 3; r++) {
+        for (let c = boxCol; c < boxCol + 3; c++) {
+            if (grid[r][c] !== 0) {
+                used.add(grid[r][c]);
+            }
+        }
+    }
+
+    // Return unused numbers
+    const candidates = [];
+    for (let num = 1; num <= 9; num++) {
+        if (!used.has(num)) {
+            candidates.push(num);
+        }
+    }
+
+    return candidates;
+}
+
+// Helper function to get numbers used in row, column, and box
+function getUsedNumbers(grid, row, col) {
+    const rowNums = [];
+    const colNums = [];
+    const boxNums = [];
+
+    // Get row numbers
+    for (let c = 0; c < 9; c++) {
+        if (grid[row][c] !== 0) {
+            rowNums.push(grid[row][c]);
+        }
+    }
+
+    // Get column numbers
+    for (let r = 0; r < 9; r++) {
+        if (grid[r][col] !== 0) {
+            colNums.push(grid[r][col]);
+        }
+    }
+
+    // Get box numbers
+    const boxRow = Math.floor(row / 3) * 3;
+    const boxCol = Math.floor(col / 3) * 3;
+    for (let r = boxRow; r < boxRow + 3; r++) {
+        for (let c = boxCol; c < boxCol + 3; c++) {
+            if (grid[r][c] !== 0) {
+                boxNums.push(grid[r][c]);
+            }
+        }
+    }
+
+    return { rowNums, colNums, boxNums };
+}
+
+// Helper function to generate detailed explanation
+function generateHintExplanation(grid, solutionGrid, row, col, value) {
+    const { rowNums, colNums, boxNums } = getUsedNumbers(grid, row, col);
+    const candidates = getPossibleValues(grid, row, col);
+    
+    // Determine which box
+    const boxRow = Math.floor(row / 3) + 1;
+    const boxCol = Math.floor(col / 3) + 1;
+    const boxName = `Kotak ${boxRow}-${boxCol}`;
+
+    let explanation = {
+        title: `Sel Baris ${row + 1}, Kolom ${col + 1}`,
+        value: value,
+        steps: [],
+        conclusion: ''
+    };
+
+    // Step 1: Check row
+    if (rowNums.length > 0) {
+        explanation.steps.push({
+            type: 'row',
+            description: `Di **Baris ${row + 1}**, sudah ada angka: ${rowNums.sort((a,b) => a-b).join(', ')}`,
+            numbers: rowNums
+        });
+    }
+
+    // Step 2: Check column
+    if (colNums.length > 0) {
+        explanation.steps.push({
+            type: 'column',
+            description: `Di **Kolom ${col + 1}**, sudah ada angka: ${colNums.sort((a,b) => a-b).join(', ')}`,
+            numbers: colNums
+        });
+    }
+
+    // Step 3: Check box
+    if (boxNums.length > 0) {
+        explanation.steps.push({
+            type: 'box',
+            description: `Di **${boxName}** (3×3), sudah ada angka: ${boxNums.sort((a,b) => a-b).join(', ')}`,
+            numbers: boxNums
+        });
+    }
+
+    // Step 4: Combine and find missing
+    const allUsed = new Set([...rowNums, ...colNums, ...boxNums]);
+    const missing = [];
+    for (let num = 1; num <= 9; num++) {
+        if (!allUsed.has(num)) {
+            missing.push(num);
+        }
+    }
+
+    explanation.steps.push({
+        type: 'analysis',
+        description: `Angka yang **belum digunakan**: ${missing.join(', ')}`,
+        numbers: missing
+    });
+
+    // Step 5: Determine technique
+    if (candidates.length === 1) {
+        explanation.technique = 'Naked Single';
+        explanation.steps.push({
+            type: 'technique',
+            description: `Menggunakan teknik **Naked Single**: Hanya ada **1 angka** yang mungkin di sel ini`,
+            highlight: true
+        });
+        explanation.conclusion = `Karena hanya ada **1 kemungkinan**, maka sel ini **pasti ${value}**! ✓`;
+    } else {
+        explanation.technique = 'Hidden Single';
+        explanation.steps.push({
+            type: 'technique',
+            description: `Menggunakan teknik **Hidden Single**: Dari ${candidates.length} kandidat (${candidates.join(', ')}), angka **${value}** adalah yang paling logis`,
+            highlight: true
+        });
+        explanation.conclusion = `Setelah analisis lebih dalam, sel ini harus diisi dengan **${value}**! ✓`;
+    }
+
+    explanation.summary = `Angka **${value}** dipilih karena ini adalah satu-satunya angka yang valid untuk sel Baris ${row + 1}, Kolom ${col + 1} berdasarkan aturan Sudoku.`;
+
+    return explanation;
+}
+
 const getHint = async (req, res) => {
     try {
         const { id } = req.params;
@@ -225,21 +382,37 @@ const getHint = async (req, res) => {
         const currentGrid = game.current_grid;
         const solutionGrid = game.solution_grid;
 
-        // Find empty cell
-        let emptyCell = null;
-        for (let r = 0; r < 9; r++) {
-            for (let c = 0; c < 9; c++) {
-                if (currentGrid[r][c] === 0) {
-                    emptyCell = { row: r, col: c };
-                    break;
+        // Find best empty cell using MRV (Minimum Remaining Values)
+        let bestCell = null;
+        let minCandidates = 10;
+
+        for (let row = 0; row < 9; row++) {
+            for (let col = 0; col < 9; col++) {
+                if (currentGrid[row][col] === 0) {
+                    const candidates = getPossibleValues(currentGrid, row, col);
+                    
+                    if (candidates.length < minCandidates) {
+                        minCandidates = candidates.length;
+                        bestCell = { row, col };
+                    }
                 }
             }
-            if (emptyCell) break;
         }
 
-        if (!emptyCell) {
+        if (!bestCell) {
             return res.status(400).json({ error: 'No empty cells' });
         }
+
+        const hintValue = solutionGrid[bestCell.row][bestCell.col];
+
+        // Generate detailed explanation
+        const explanation = generateHintExplanation(
+            currentGrid,
+            solutionGrid,
+            bestCell.row,
+            bestCell.col,
+            hintValue
+        );
 
         // Update hints count
         await db.query(
@@ -248,11 +421,12 @@ const getHint = async (req, res) => {
         );
 
         const hint = {
-            row: emptyCell.row,
-            col: emptyCell.col,
-            value: solutionGrid[emptyCell.row][emptyCell.col],
+            row: bestCell.row,
+            col: bestCell.col,
+            value: hintValue,
             level: level,
-            technique: 'Single candidate'
+            technique: explanation.technique,
+            explanation: explanation
         };
 
         res.json({ hint });

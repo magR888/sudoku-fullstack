@@ -13,6 +13,8 @@ const GameBoard = ({ gameId, initialGame }) => {
     const [isRunning, setIsRunning] = useState(true);
     const [error, setError] = useState('');
     const [message, setMessage] = useState('');
+    const [hintExplanation, setHintExplanation] = useState(null);
+    const [showExplanation, setShowExplanation] = useState(false);
 
     // Timer
     useEffect(() => {
@@ -127,6 +129,10 @@ const GameBoard = ({ gameId, initialGame }) => {
         try {
             const hint = await gameService.getHint(gameId, 3);
             
+            // Store explanation
+            setHintExplanation(hint.explanation);
+            setShowExplanation(true);
+            
             // Auto-apply hint
             const newGrid = [...game.currentGrid];
             newGrid[hint.row][hint.col] = hint.value;
@@ -137,8 +143,8 @@ const GameBoard = ({ gameId, initialGame }) => {
             });
 
             setSelectedCell({ row: hint.row, col: hint.col });
-            setMessage(`💡 Hint: ${hint.value} at row ${hint.row + 1}, col ${hint.col + 1}`);
-            setTimeout(() => setMessage(''), 3000);
+            setMessage(`💡 Hint applied! See explanation below.`);
+            setTimeout(() => setMessage(''), 5000);
 
         } catch (err) {
             setError(err.response?.data?.error || 'Hint failed');
@@ -232,6 +238,53 @@ const GameBoard = ({ gameId, initialGame }) => {
                     {isRunning ? '⏸️ Pause' : '▶️ Resume'}
                 </button>
             </div>
+
+            {/* Hint Explanation Panel */}
+            {showExplanation && hintExplanation && (
+                <div className="hint-explanation-panel">
+                    <div className="explanation-header">
+                        <h3>💡 {hintExplanation.title}</h3>
+                        <button 
+                            className="close-btn"
+                            onClick={() => setShowExplanation(false)}
+                        >
+                            ×
+                        </button>
+                    </div>
+
+                    <div className="explanation-content">
+                        <div className="explanation-value">
+                            <span className="label">Angka yang dipilih:</span>
+                            <span className="value-big">{hintExplanation.value}</span>
+                        </div>
+
+                        <div className="explanation-steps">
+                            <h4>📋 Langkah Analisis:</h4>
+                            {hintExplanation.steps.map((step, index) => (
+                                <div 
+                                    key={index} 
+                                    className={`step ${step.highlight ? 'highlight' : ''}`}
+                                >
+                                    <div className="step-number">{index + 1}</div>
+                                    <div 
+                                        className="step-description"
+                                        dangerouslySetInnerHTML={{ __html: step.description.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>') }}
+                                    />
+                                </div>
+                            ))}
+                        </div>
+
+                        <div className="explanation-conclusion">
+                            <h4>✅ Kesimpulan:</h4>
+                            <p dangerouslySetInnerHTML={{ __html: hintExplanation.conclusion.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>') }} />
+                        </div>
+
+                        <div className="explanation-technique">
+                            <span className="technique-badge">{hintExplanation.technique}</span>
+                        </div>
+                    </div>
+                </div>
+            )}
         </div>
     );
 };
