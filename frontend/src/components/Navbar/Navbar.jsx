@@ -57,17 +57,18 @@ const Navbar = () => {
                 </div>
 
                 <div className="navbar-auth">
-                    {!isGuest && (
+                    {!isGuest ? (
                         <Link
                             to="/profile"
                             className={`navbar-link ${isActive('/profile') ? 'active' : ''}`}
                         >
-                            👤 Profil
+                            👤 {user?.username}
                         </Link>
+                    ) : (
+                        <span className="navbar-user">
+                            👤 {user?.username}
+                        </span>
                     )}
-                    <span className="navbar-user">
-                        {user?.username}
-                    </span>
                     <button className="navbar-logout" onClick={logout}>
                         Keluar
                     </button>

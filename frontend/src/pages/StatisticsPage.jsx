@@ -198,7 +198,7 @@ const StatisticsPage = () => {
                                 </thead>
                                 <tbody>
                                     {leaderboard.map((entry, index) => (
-                                        <tr key={entry.userId}>
+                                        <tr key={`${entry.userId}-${index}`}>
                                             <td className="rank">
                                                 {index === 0 && '🥇'}
                                                 {index === 1 && '🥈'}

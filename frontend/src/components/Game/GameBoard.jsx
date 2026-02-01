@@ -85,6 +85,7 @@ const GameBoard = ({ gameId, initialGame }) => {
 
         } catch (err) {
             setError(err.response?.data?.error || 'Langkah gagal');
+            setTimeout(() => setError(''), 2000);
         }
     };
 
@@ -212,8 +213,12 @@ const GameBoard = ({ gameId, initialGame }) => {
                 </div>
             </div>
 
-            {error && <div className="error-message">{error}</div>}
-            {message && <div className="info-message">{message}</div>}
+            {error && <div className="game-toast error">{error}</div>}
+            {message && (
+                <div className={`game-toast ${message.includes('❌') ? 'error' : message.includes('✓') ? 'success' : 'info'}`}>
+                    {message}
+                </div>
+            )}
 
             <div className="game-board">
                 {Array(9).fill(null).map((_, row) => (
@@ -244,9 +249,6 @@ const GameBoard = ({ gameId, initialGame }) => {
             <div className="game-controls">
                 <button className="btn btn-secondary" onClick={requestHint}>
                     💡 Petunjuk
-                </button>
-                <button className="btn btn-secondary" onClick={saveGame}>
-                    💾 Simpan
                 </button>
                 <button
                     className="btn btn-warning"

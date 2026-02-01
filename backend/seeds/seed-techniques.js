@@ -686,6 +686,403 @@ const techniques = [
             answerValue: 4,
             hint: 'Cari dua angka yang hanya muncul di dua sel yang sama di Row 3'
         }
+    },
+    {
+        name: 'Naked Triples',
+        slug: 'naked-triples',
+        category: 'intermediate',
+        difficulty: 6,
+        description: 'Menemukan tiga sel dengan tiga kandidat yang sama untuk eliminasi',
+        icon: '🔺',
+        when_to_use: 'Gunakan ketika tiga sel dalam satu unit memiliki kandidat yang hanya terdiri dari tiga angka yang sama (tidak harus ketiganya ada di setiap sel).',
+        order_index: 7,
+        mastery_requirement: 5,
+        steps: [
+            {
+                title: 'Pengenalan Naked Triples',
+                explanation: 'Naked Triples adalah perluasan dari Naked Pairs. Tiga sel dalam satu unit yang kandidatnya hanya berisi kombinasi dari 3 angka yang sama. Misalnya: {1,3}, {1,7}, {3,7} membentuk Naked Triple untuk angka 1, 3, 7.',
+                grid: [
+                    [0, 0, 0, 1, 0, 5, 0, 6, 8],
+                    [0, 0, 0, 0, 0, 0, 7, 0, 1],
+                    [0, 0, 0, 0, 0, 6, 0, 0, 0],
+                    [0, 7, 0, 2, 0, 0, 0, 0, 0],
+                    [5, 0, 0, 0, 0, 0, 0, 0, 9],
+                    [0, 0, 0, 0, 0, 1, 0, 3, 0],
+                    [0, 0, 0, 6, 0, 0, 0, 0, 0],
+                    [8, 0, 7, 0, 0, 0, 0, 0, 0],
+                    [1, 5, 0, 3, 0, 7, 0, 0, 0]
+                ],
+                instruction: 'Mari analisis Row 1 untuk menemukan Naked Triple'
+            },
+            {
+                title: 'Identifikasi Kandidat',
+                explanation: 'Hitung kandidat untuk setiap sel kosong di Row 1. Kita mencari 3 sel yang kandidatnya hanya berisi 3 angka yang sama.',
+                grid: [
+                    [0, 0, 0, 1, 0, 5, 0, 6, 8],
+                    [0, 0, 0, 0, 0, 0, 7, 0, 1],
+                    [0, 0, 0, 0, 0, 6, 0, 0, 0],
+                    [0, 7, 0, 2, 0, 0, 0, 0, 0],
+                    [5, 0, 0, 0, 0, 0, 0, 0, 9],
+                    [0, 0, 0, 0, 0, 1, 0, 3, 0],
+                    [0, 0, 0, 6, 0, 0, 0, 0, 0],
+                    [8, 0, 7, 0, 0, 0, 0, 0, 0],
+                    [1, 5, 0, 3, 0, 7, 0, 0, 0]
+                ],
+                highlightRow: 0,
+                highlightCells: [[0, 0], [0, 1], [0, 2], [0, 4], [0, 6]],
+                instruction: 'Sel kosong di Row 1: kolom 1, 2, 3, 5, 7'
+            },
+            {
+                title: 'Temukan Tiga Sel',
+                explanation: 'Misalnya kita temukan 3 sel dengan kandidat: {2,3}, {2,9}, {3,9}. Ketiganya hanya berisi kombinasi dari angka 2, 3, 9.',
+                grid: [
+                    [0, 0, 0, 1, 0, 5, 0, 6, 8],
+                    [0, 0, 0, 0, 0, 0, 7, 0, 1],
+                    [0, 0, 0, 0, 0, 6, 0, 0, 0],
+                    [0, 7, 0, 2, 0, 0, 0, 0, 0],
+                    [5, 0, 0, 0, 0, 0, 0, 0, 9],
+                    [0, 0, 0, 0, 0, 1, 0, 3, 0],
+                    [0, 0, 0, 6, 0, 0, 0, 0, 0],
+                    [8, 0, 7, 0, 0, 0, 0, 0, 0],
+                    [1, 5, 0, 3, 0, 7, 0, 0, 0]
+                ],
+                highlightCells: [[0, 0], [0, 2], [0, 4]],
+                candidates: [2, 3, 9],
+                instruction: 'Tiga sel ini hanya berisi kandidat dari {2, 3, 9} — ini adalah Naked Triple!'
+            },
+            {
+                title: 'Lakukan Eliminasi',
+                explanation: 'Karena angka 2, 3, 9 pasti menempati ketiga sel ini, eliminasi angka-angka tersebut dari sel lain di Row 1.',
+                grid: [
+                    [0, 0, 0, 1, 0, 5, 0, 6, 8],
+                    [0, 0, 0, 0, 0, 0, 7, 0, 1],
+                    [0, 0, 0, 0, 0, 6, 0, 0, 0],
+                    [0, 7, 0, 2, 0, 0, 0, 0, 0],
+                    [5, 0, 0, 0, 0, 0, 0, 0, 9],
+                    [0, 0, 0, 0, 0, 1, 0, 3, 0],
+                    [0, 0, 0, 6, 0, 0, 0, 0, 0],
+                    [8, 0, 7, 0, 0, 0, 0, 0, 0],
+                    [1, 5, 0, 3, 0, 7, 0, 0, 0]
+                ],
+                highlightRow: 0,
+                highlightCells: [[0, 1], [0, 6]],
+                instruction: 'Eliminasi 2, 3, 9 dari sel lain di Row 1! ✓',
+                success: true
+            }
+        ],
+        example_puzzle: {
+            question: 'Temukan Naked Triple di Box tengah!',
+            grid: [
+                [0, 0, 0, 0, 0, 0, 0, 0, 0],
+                [0, 0, 0, 0, 0, 0, 0, 0, 0],
+                [0, 0, 0, 0, 0, 0, 0, 0, 0],
+                [0, 0, 0, 0, 0, 0, 0, 0, 0],
+                [0, 0, 0, 0, 0, 0, 0, 0, 0],
+                [0, 0, 0, 0, 0, 0, 0, 0, 0],
+                [0, 0, 0, 0, 0, 0, 0, 0, 0],
+                [0, 0, 0, 0, 0, 0, 0, 0, 0],
+                [0, 0, 0, 0, 0, 0, 0, 0, 0]
+            ],
+            answerCell: [4, 4],
+            answerValue: 5,
+            hint: 'Cari tiga sel yang kandidatnya hanya terdiri dari 3 angka di Box tengah'
+        }
+    },
+    {
+        name: 'X-Wing',
+        slug: 'x-wing',
+        category: 'advanced',
+        difficulty: 7,
+        description: 'Teknik lanjutan yang menggunakan pola persegi panjang untuk eliminasi kandidat',
+        icon: '✈️',
+        when_to_use: 'Gunakan ketika sebuah kandidat angka hanya muncul di dua tempat di dua baris berbeda, dan kedua tempat tersebut berada di kolom yang sama (atau sebaliknya).',
+        order_index: 8,
+        mastery_requirement: 5,
+        steps: [
+            {
+                title: 'Pengenalan X-Wing',
+                explanation: 'X-Wing adalah pola yang terjadi ketika sebuah angka hanya bisa di 2 posisi di masing-masing dari 2 baris, dan posisi-posisi tersebut berada di kolom yang sama. Ini membentuk pola persegi panjang.',
+                grid: [
+                    [0, 0, 3, 0, 0, 0, 7, 0, 0],
+                    [6, 0, 0, 1, 9, 5, 0, 0, 0],
+                    [0, 9, 8, 0, 0, 0, 0, 6, 0],
+                    [8, 0, 0, 0, 6, 0, 0, 0, 3],
+                    [4, 0, 0, 8, 0, 3, 0, 0, 1],
+                    [7, 0, 0, 0, 2, 0, 0, 0, 6],
+                    [0, 6, 0, 0, 0, 0, 2, 8, 0],
+                    [0, 0, 0, 4, 1, 9, 0, 0, 5],
+                    [0, 0, 0, 0, 8, 0, 0, 7, 9]
+                ],
+                instruction: 'X-Wing membentuk empat titik persegi panjang. Mari lihat contohnya.'
+            },
+            {
+                title: 'Identifikasi Baris',
+                explanation: 'Cari angka yang hanya muncul di 2 posisi di masing-masing baris. Misalnya angka 5 hanya bisa di kolom 2 dan kolom 8 di Baris 1, dan juga hanya bisa di kolom 2 dan kolom 8 di Baris 7.',
+                grid: [
+                    [0, 0, 3, 0, 0, 0, 7, 0, 0],
+                    [6, 0, 0, 1, 9, 5, 0, 0, 0],
+                    [0, 9, 8, 0, 0, 0, 0, 6, 0],
+                    [8, 0, 0, 0, 6, 0, 0, 0, 3],
+                    [4, 0, 0, 8, 0, 3, 0, 0, 1],
+                    [7, 0, 0, 0, 2, 0, 0, 0, 6],
+                    [0, 6, 0, 0, 0, 0, 2, 8, 0],
+                    [0, 0, 0, 4, 1, 9, 0, 0, 5],
+                    [0, 0, 0, 0, 8, 0, 0, 7, 9]
+                ],
+                highlightCells: [[0, 1], [0, 7], [6, 1], [6, 7]],
+                instruction: 'Empat sel ini membentuk pola X-Wing — persegi panjang di Baris 1 & 7, Kolom 2 & 8'
+            },
+            {
+                title: 'Logika X-Wing',
+                explanation: 'Karena angka tersebut pasti ada di salah satu dari dua posisi di setiap baris, maka di kolom-kolom tersebut angka itu sudah "diklaim" oleh baris-baris X-Wing.',
+                grid: [
+                    [0, 0, 3, 0, 0, 0, 7, 0, 0],
+                    [6, 0, 0, 1, 9, 5, 0, 0, 0],
+                    [0, 9, 8, 0, 0, 0, 0, 6, 0],
+                    [8, 0, 0, 0, 6, 0, 0, 0, 3],
+                    [4, 0, 0, 8, 0, 3, 0, 0, 1],
+                    [7, 0, 0, 0, 2, 0, 0, 0, 6],
+                    [0, 6, 0, 0, 0, 0, 2, 8, 0],
+                    [0, 0, 0, 4, 1, 9, 0, 0, 5],
+                    [0, 0, 0, 0, 8, 0, 0, 7, 9]
+                ],
+                highlightCells: [[0, 1], [0, 7], [6, 1], [6, 7]],
+                highlightCol: 1,
+                instruction: 'Angka ini pasti ada di Kolom 2 di Baris 1 ATAU Baris 7 — jadi eliminasi dari baris lain!'
+            },
+            {
+                title: 'Lakukan Eliminasi',
+                explanation: 'Eliminasi kandidat tersebut dari sel-sel lain di kedua kolom (di luar baris X-Wing)',
+                grid: [
+                    [0, 0, 3, 0, 0, 0, 7, 0, 0],
+                    [6, 0, 0, 1, 9, 5, 0, 0, 0],
+                    [0, 9, 8, 0, 0, 0, 0, 6, 0],
+                    [8, 0, 0, 0, 6, 0, 0, 0, 3],
+                    [4, 0, 0, 8, 0, 3, 0, 0, 1],
+                    [7, 0, 0, 0, 2, 0, 0, 0, 6],
+                    [0, 6, 0, 0, 0, 0, 2, 8, 0],
+                    [0, 0, 0, 4, 1, 9, 0, 0, 5],
+                    [0, 0, 0, 0, 8, 0, 0, 7, 9]
+                ],
+                highlightCol: 1,
+                highlightCells: [[1, 1], [2, 1], [3, 1], [4, 1], [5, 1], [7, 1], [8, 1]],
+                instruction: 'Eliminasi kandidat dari Kolom 2 (kecuali baris X-Wing)! ✓',
+                success: true
+            }
+        ],
+        example_puzzle: {
+            question: 'Temukan pola X-Wing di grid ini!',
+            grid: [
+                [0, 0, 3, 0, 2, 0, 6, 0, 0],
+                [9, 0, 0, 3, 0, 5, 0, 0, 1],
+                [0, 0, 1, 8, 0, 6, 4, 0, 0],
+                [0, 0, 8, 1, 0, 2, 9, 0, 0],
+                [7, 0, 0, 0, 0, 0, 0, 0, 8],
+                [0, 0, 6, 7, 0, 8, 2, 0, 0],
+                [0, 0, 2, 6, 0, 9, 5, 0, 0],
+                [8, 0, 0, 2, 0, 3, 0, 0, 9],
+                [0, 0, 5, 0, 1, 0, 3, 0, 0]
+            ],
+            answerCell: [1, 1],
+            answerValue: 4,
+            hint: 'Cari angka yang hanya muncul di 2 posisi di dua baris, dengan kolom yang sama'
+        }
+    },
+    {
+        name: 'Swordfish',
+        slug: 'swordfish',
+        category: 'advanced',
+        difficulty: 8,
+        description: 'Perluasan X-Wing dengan tiga baris dan tiga kolom',
+        icon: '🗡️',
+        when_to_use: 'Gunakan ketika sebuah kandidat hanya muncul di 2-3 posisi di masing-masing dari 3 baris, dan semua posisi tersebut berada di 3 kolom yang sama (atau sebaliknya).',
+        order_index: 9,
+        mastery_requirement: 5,
+        steps: [
+            {
+                title: 'Pengenalan Swordfish',
+                explanation: 'Swordfish adalah perluasan dari X-Wing. Alih-alih 2 baris × 2 kolom, Swordfish menggunakan 3 baris × 3 kolom. Sebuah angka yang hanya bisa di 2-3 posisi di 3 baris berbeda, dan posisi-posisi tersebut hanya ada di 3 kolom.',
+                grid: [
+                    [0, 2, 0, 0, 0, 0, 0, 3, 0],
+                    [0, 0, 0, 6, 0, 1, 0, 0, 0],
+                    [0, 0, 0, 0, 9, 0, 0, 0, 0],
+                    [0, 0, 4, 0, 0, 0, 9, 0, 0],
+                    [3, 0, 0, 0, 5, 0, 0, 0, 7],
+                    [0, 0, 6, 0, 0, 0, 1, 0, 0],
+                    [0, 0, 0, 0, 2, 0, 0, 0, 0],
+                    [0, 0, 0, 1, 0, 3, 0, 0, 0],
+                    [0, 8, 0, 0, 0, 0, 0, 4, 0]
+                ],
+                instruction: 'Swordfish menggunakan 3 baris dan 3 kolom. Mari lihat polanya.'
+            },
+            {
+                title: 'Identifikasi Tiga Baris',
+                explanation: 'Cari angka yang hanya muncul di 2-3 posisi di masing-masing baris. Posisi-posisi ini harus berada di maksimal 3 kolom yang sama.',
+                grid: [
+                    [0, 2, 0, 0, 0, 0, 0, 3, 0],
+                    [0, 0, 0, 6, 0, 1, 0, 0, 0],
+                    [0, 0, 0, 0, 9, 0, 0, 0, 0],
+                    [0, 0, 4, 0, 0, 0, 9, 0, 0],
+                    [3, 0, 0, 0, 5, 0, 0, 0, 7],
+                    [0, 0, 6, 0, 0, 0, 1, 0, 0],
+                    [0, 0, 0, 0, 2, 0, 0, 0, 0],
+                    [0, 0, 0, 1, 0, 3, 0, 0, 0],
+                    [0, 8, 0, 0, 0, 0, 0, 4, 0]
+                ],
+                highlightCells: [[0, 0], [0, 2], [4, 2], [4, 5], [8, 0], [8, 5]],
+                instruction: 'Contoh: angka di Baris 1 (kol 1,3), Baris 5 (kol 3,6), Baris 9 (kol 1,6) — 3 kolom: 1, 3, 6'
+            },
+            {
+                title: 'Pola Swordfish',
+                explanation: 'Ketiga baris "mengunci" angka tersebut di 3 kolom. Angka ini pasti ada di salah satu posisi di setiap baris.',
+                grid: [
+                    [0, 2, 0, 0, 0, 0, 0, 3, 0],
+                    [0, 0, 0, 6, 0, 1, 0, 0, 0],
+                    [0, 0, 0, 0, 9, 0, 0, 0, 0],
+                    [0, 0, 4, 0, 0, 0, 9, 0, 0],
+                    [3, 0, 0, 0, 5, 0, 0, 0, 7],
+                    [0, 0, 6, 0, 0, 0, 1, 0, 0],
+                    [0, 0, 0, 0, 2, 0, 0, 0, 0],
+                    [0, 0, 0, 1, 0, 3, 0, 0, 0],
+                    [0, 8, 0, 0, 0, 0, 0, 4, 0]
+                ],
+                highlightCells: [[0, 0], [0, 2], [4, 2], [4, 5], [8, 0], [8, 5]],
+                instruction: 'Pola Swordfish terbentuk! Angka ini dikunci di 3 kolom oleh 3 baris.'
+            },
+            {
+                title: 'Lakukan Eliminasi',
+                explanation: 'Eliminasi kandidat tersebut dari sel-sel lain di ketiga kolom (di luar baris Swordfish)',
+                grid: [
+                    [0, 2, 0, 0, 0, 0, 0, 3, 0],
+                    [0, 0, 0, 6, 0, 1, 0, 0, 0],
+                    [0, 0, 0, 0, 9, 0, 0, 0, 0],
+                    [0, 0, 4, 0, 0, 0, 9, 0, 0],
+                    [3, 0, 0, 0, 5, 0, 0, 0, 7],
+                    [0, 0, 6, 0, 0, 0, 1, 0, 0],
+                    [0, 0, 0, 0, 2, 0, 0, 0, 0],
+                    [0, 0, 0, 1, 0, 3, 0, 0, 0],
+                    [0, 8, 0, 0, 0, 0, 0, 4, 0]
+                ],
+                highlightCells: [[1, 0], [2, 0], [3, 0], [5, 0], [6, 0], [7, 0], [1, 2], [2, 2], [6, 2], [7, 2]],
+                instruction: 'Eliminasi kandidat dari Kolom 1, 3, dan 6 (di luar baris Swordfish)! ✓',
+                success: true
+            }
+        ],
+        example_puzzle: {
+            question: 'Identifikasi pola Swordfish di grid ini!',
+            grid: [
+                [0, 0, 3, 0, 2, 0, 6, 0, 0],
+                [9, 0, 0, 3, 0, 5, 0, 0, 1],
+                [0, 0, 1, 8, 0, 6, 4, 0, 0],
+                [0, 0, 8, 1, 0, 2, 9, 0, 0],
+                [7, 0, 0, 0, 0, 0, 0, 0, 8],
+                [0, 0, 6, 7, 0, 8, 2, 0, 0],
+                [0, 0, 2, 6, 0, 9, 5, 0, 0],
+                [8, 0, 0, 2, 0, 3, 0, 0, 9],
+                [0, 0, 5, 0, 1, 0, 3, 0, 0]
+            ],
+            answerCell: [4, 1],
+            answerValue: 3,
+            hint: 'Cari angka yang muncul di 2-3 posisi di 3 baris, dan posisi-posisinya hanya ada di 3 kolom'
+        }
+    },
+    {
+        name: 'XY-Wing',
+        slug: 'xy-wing',
+        category: 'advanced',
+        difficulty: 8,
+        description: 'Menggunakan tiga sel dengan pasangan kandidat yang saling terhubung',
+        icon: '🦅',
+        when_to_use: 'Gunakan ketika ada sel pivot dengan kandidat {X,Y} yang terhubung ke dua sel wing: satu dengan {X,Z} dan satu dengan {Y,Z}. Angka Z bisa dieliminasi dari sel yang "melihat" kedua wing.',
+        order_index: 10,
+        mastery_requirement: 5,
+        steps: [
+            {
+                title: 'Pengenalan XY-Wing',
+                explanation: 'XY-Wing melibatkan 3 sel: 1 pivot dan 2 wing. Pivot punya kandidat {X,Y}. Wing pertama punya {X,Z} dan wing kedua punya {Y,Z}. Ketiganya saling terhubung melalui baris, kolom, atau box.',
+                grid: [
+                    [0, 0, 0, 0, 0, 0, 0, 0, 0],
+                    [0, 0, 0, 0, 3, 0, 0, 0, 0],
+                    [0, 0, 5, 0, 0, 0, 8, 0, 0],
+                    [0, 0, 0, 2, 0, 6, 0, 0, 0],
+                    [0, 4, 0, 0, 0, 0, 0, 1, 0],
+                    [0, 0, 0, 8, 0, 7, 0, 0, 0],
+                    [0, 0, 9, 0, 0, 0, 3, 0, 0],
+                    [0, 0, 0, 0, 6, 0, 0, 0, 0],
+                    [0, 0, 0, 0, 0, 0, 0, 0, 0]
+                ],
+                instruction: 'XY-Wing menggunakan pivot dan dua sayap (wing). Mari pelajari polanya.'
+            },
+            {
+                title: 'Identifikasi Pivot',
+                explanation: 'Pivot adalah sel dengan tepat 2 kandidat, misalnya {3,7}. Pivot harus "melihat" (se-baris/kolom/box) dua sel wing.',
+                grid: [
+                    [0, 0, 0, 0, 0, 0, 0, 0, 0],
+                    [0, 0, 0, 0, 3, 0, 0, 0, 0],
+                    [0, 0, 5, 0, 0, 0, 8, 0, 0],
+                    [0, 0, 0, 2, 0, 6, 0, 0, 0],
+                    [0, 4, 0, 0, 0, 0, 0, 1, 0],
+                    [0, 0, 0, 8, 0, 7, 0, 0, 0],
+                    [0, 0, 9, 0, 0, 0, 3, 0, 0],
+                    [0, 0, 0, 0, 6, 0, 0, 0, 0],
+                    [0, 0, 0, 0, 0, 0, 0, 0, 0]
+                ],
+                highlightCells: [[4, 4]],
+                instruction: 'Sel pivot dengan kandidat {X, Y} — misalnya {3, 7}'
+            },
+            {
+                title: 'Identifikasi Wing',
+                explanation: 'Wing pertama punya kandidat {X,Z} (misalnya {3,5}) dan wing kedua punya {Y,Z} (misalnya {7,5}). Perhatikan: Z (angka 5) ada di kedua wing!',
+                grid: [
+                    [0, 0, 0, 0, 0, 0, 0, 0, 0],
+                    [0, 0, 0, 0, 3, 0, 0, 0, 0],
+                    [0, 0, 5, 0, 0, 0, 8, 0, 0],
+                    [0, 0, 0, 2, 0, 6, 0, 0, 0],
+                    [0, 4, 0, 0, 0, 0, 0, 1, 0],
+                    [0, 0, 0, 8, 0, 7, 0, 0, 0],
+                    [0, 0, 9, 0, 0, 0, 3, 0, 0],
+                    [0, 0, 0, 0, 6, 0, 0, 0, 0],
+                    [0, 0, 0, 0, 0, 0, 0, 0, 0]
+                ],
+                highlightCells: [[4, 4], [4, 0], [0, 4]],
+                instruction: 'Pivot {3,7}, Wing 1 {3,5}, Wing 2 {7,5} — angka Z = 5 ada di kedua wing'
+            },
+            {
+                title: 'Lakukan Eliminasi',
+                explanation: 'Angka Z (5) bisa dieliminasi dari semua sel yang "melihat" kedua wing secara bersamaan. Apapun nilai pivot, salah satu wing pasti berisi Z.',
+                grid: [
+                    [0, 0, 0, 0, 0, 0, 0, 0, 0],
+                    [0, 0, 0, 0, 3, 0, 0, 0, 0],
+                    [0, 0, 5, 0, 0, 0, 8, 0, 0],
+                    [0, 0, 0, 2, 0, 6, 0, 0, 0],
+                    [0, 4, 0, 0, 0, 0, 0, 1, 0],
+                    [0, 0, 0, 8, 0, 7, 0, 0, 0],
+                    [0, 0, 9, 0, 0, 0, 3, 0, 0],
+                    [0, 0, 0, 0, 6, 0, 0, 0, 0],
+                    [0, 0, 0, 0, 0, 0, 0, 0, 0]
+                ],
+                highlightCells: [[0, 0]],
+                instruction: 'Eliminasi angka Z (5) dari sel yang melihat kedua wing! ✓',
+                success: true
+            }
+        ],
+        example_puzzle: {
+            question: 'Temukan XY-Wing di grid ini!',
+            grid: [
+                [0, 0, 3, 0, 2, 0, 6, 0, 0],
+                [9, 0, 0, 3, 0, 5, 0, 0, 1],
+                [0, 0, 1, 8, 0, 6, 4, 0, 0],
+                [0, 0, 8, 1, 0, 2, 9, 0, 0],
+                [7, 0, 0, 0, 0, 0, 0, 0, 8],
+                [0, 0, 6, 7, 0, 8, 2, 0, 0],
+                [0, 0, 2, 6, 0, 9, 5, 0, 0],
+                [8, 0, 0, 2, 0, 3, 0, 0, 9],
+                [0, 0, 5, 0, 1, 0, 3, 0, 0]
+            ],
+            answerCell: [4, 4],
+            answerValue: 4,
+            hint: 'Cari sel pivot dengan 2 kandidat yang terhubung ke dua wing'
+        }
     }
 ];
 

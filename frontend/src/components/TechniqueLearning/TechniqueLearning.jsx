@@ -142,7 +142,7 @@ const TechniqueLearning = () => {
                         >
                             <div className="technique-icon">{technique.icon}</div>
                             <h3>{technique.name}</h3>
-                            <span className={`difficulty-badge ${getCategoryDisplay(technique.category).toLowerCase()}`}>
+                            <span className={`difficulty-badge ${technique.category}`}>
                                 {getCategoryDisplay(technique.category)}
                             </span>
                             <p>{technique.description}</p>
@@ -180,7 +180,7 @@ const TechniqueLearning = () => {
                         <span className="technique-icon-large">{selectedTechnique.icon}</span>
                         <h2>{selectedTechnique.name}</h2>
                     </div>
-                    <span className={`difficulty-badge ${getCategoryDisplay(selectedTechnique.category).toLowerCase()}`}>
+                    <span className={`difficulty-badge ${selectedTechnique.category}`}>
                         {getCategoryDisplay(selectedTechnique.category)}
                     </span>
                 </div>
