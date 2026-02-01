@@ -77,12 +77,6 @@ const StatisticsPage = () => {
             <div className="statistics-container">
                 <div className="stats-header">
                     <h1>📊 Your Statistics</h1>
-                    <button 
-                        className="btn btn-primary"
-                        onClick={() => navigate('/')}
-                    >
-                        🎮 New Game
-                    </button>
                 </div>
 
                 {/* Overview Cards */}

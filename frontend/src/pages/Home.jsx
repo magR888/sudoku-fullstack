@@ -69,22 +69,13 @@ const Home = () => {
                     </div>
                 )}
 
-                <button 
+                <button
                     className="btn-start-game"
                     onClick={handleStartGame}
                     disabled={loading}
                 >
                     {loading ? 'Creating Game...' : '🎮 Start New Game'}
                 </button>
-
-                <div className="home-links">
-                    <a href="/statistics" className="home-link">
-                        📊 View Statistics
-                    </a>
-                    <a href="/tutorials" className="home-link">
-                        📚 Learn Techniques
-                    </a>
-                </div>
             </div>
         </div>
     );

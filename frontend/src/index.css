@@ -18,13 +18,19 @@ body {
 
 .app {
     min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.app > *:not(.navbar) {
+    flex: 1;
 }
 
 .loading {
     display: flex;
     align-items: center;
     justify-content: center;
-    min-height: 100vh;
+    min-height: calc(100vh - 64px);
     font-size: 1.5rem;
     color: #4F46E5;
 }
@@ -35,7 +41,7 @@ body {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    min-height: 100vh;
+    min-height: calc(100vh - 64px);
     padding: 2rem;
     text-align: center;
 }

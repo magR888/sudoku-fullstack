@@ -127,14 +127,6 @@ const TutorialsPage = () => {
                     })}
                 </div>
 
-                <div className="tutorials-footer">
-                    <button 
-                        className="btn btn-primary"
-                        onClick={() => navigate('/')}
-                    >
-                        Back to Home
-                    </button>
-                </div>
             </div>
         </div>
     );

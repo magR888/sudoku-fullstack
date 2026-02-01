@@ -28,12 +28,12 @@ const getTutorial = async (req, res) => {
         const { id } = req.params;
         const userId = req.user?.id;
 
-        // Get tutorial
+        // Get tutorial - check if id is UUID format or slug
         const tutorialResult = await db.query(
-            `SELECT id, title, slug, description, difficulty, duration_minutes, 
+            `SELECT id, title, slug, description, difficulty, duration_minutes,
                     icon, content
              FROM tutorials
-             WHERE id = $1 OR slug = $1`,
+             WHERE id::text = $1 OR slug = $1`,
             [id]
         );
 

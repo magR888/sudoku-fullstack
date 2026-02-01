@@ -42,7 +42,7 @@ const tutorials = [
                 {
                     title: 'What is Sudoku?',
                     content: 'Sudoku is a logic-based number puzzle game. The objective is to fill a 9×9 grid with digits so that each column, each row, and each of the nine 3×3 subgrids contains all of the digits from 1 to 9.\n\nSudoku does not require mathematical knowledge. It is purely a logic puzzle where you use deduction to find the correct placement of numbers.',
-                    example: '3 _ _ | _ 7 _ | _ _ 4\n_ _ 7 | _ _ _ | 3 _ _\n_ 8 _ | _ _ _ | _ 1 _\n------+-------+------',
+                    example: 'A Sudoku puzzle starts with some numbers already filled in. Your job is to fill in the remaining empty cells. For instance, if a row has 1,2,3,4,5,6,7,8 already filled, the empty cell must be 9!',
                     tips: [
                         'Start with rows, columns, or boxes that have the most numbers',
                         'Look for cells where only one number can fit',
@@ -83,7 +83,7 @@ const tutorials = [
                 {
                     title: 'What is Single Candidate?',
                     content: 'The Single Candidate technique (also called "Naked Single") is the most basic Sudoku solving technique. It involves finding a cell where only one number is possible based on the current state of the row, column, and box.\n\nThis is often the first technique beginners learn and use throughout the entire solving process.',
-                    example: 'If a cell\'s row already has 1,2,3,4,5,6,7,8, then the cell must be 9!',
+                    example: 'Imagine a cell where: Row has 1,2,3,5,6,7,8 • Column has 4,9 • Box has 2,3. Combined, the used numbers are 1,2,3,4,5,6,7,8,9 except for one - that missing number is your answer!',
                     tips: [
                         'Check each constraint: row, column, and box',
                         'Look for cells in rows/columns/boxes with many numbers',

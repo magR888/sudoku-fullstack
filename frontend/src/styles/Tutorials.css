@@ -1,8 +1,8 @@
 /* TUTORIALS.CSS - Tutorials Page Styles */
 
 .tutorials-page {
-    min-height: 100vh;
-    background: #F3F4F6;
+    min-height: calc(100vh - 64px);
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     padding: 2rem;
 }
 
@@ -13,18 +13,20 @@
 
 .tutorials-header {
     text-align: center;
-    margin-bottom: 3rem;
+    color: white;
+    margin-bottom: 1.5rem;
+    padding: 1rem;
 }
 
 .tutorials-header h1 {
     font-size: 2.5rem;
-    color: #1F2937;
     margin-bottom: 0.5rem;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
 }
 
 .tutorials-subtitle {
     font-size: 1.1rem;
-    color: #6B7280;
+    opacity: 0.95;
 }
 
 /* Tutorial Cards Grid */
@@ -132,8 +134,8 @@
 
 /* Tutorial Detail Page */
 .tutorial-detail-page {
-    min-height: 100vh;
-    background: #F3F4F6;
+    min-height: calc(100vh - 64px);
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     padding: 2rem;
 }
 
@@ -216,10 +218,10 @@
 }
 
 .example-content {
-    font-family: monospace;
     font-size: 1rem;
-    line-height: 1.6;
+    line-height: 1.8;
     color: #1F2937;
+    padding: 0.5rem 0;
 }
 
 .section-tips {
@@ -280,6 +282,10 @@
     .tutorials-page,
     .tutorial-detail-page {
         padding: 1rem;
+    }
+
+    .tutorials-header h1 {
+        font-size: 2rem;
     }
 
     .tutorials-grid {

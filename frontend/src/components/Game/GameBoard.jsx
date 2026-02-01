@@ -181,6 +181,23 @@ const GameBoard = ({ gameId, initialGame }) => {
 
     return (
         <div className="game-container">
+            {/* Pause Modal */}
+            {!isRunning && (
+                <div className="pause-overlay">
+                    <div className="pause-modal">
+                        <div className="pause-icon">⏸️</div>
+                        <h3>Game Paused</h3>
+                        <p>Take a break! Your progress is saved.</p>
+                        <button
+                            className="btn btn-primary btn-large"
+                            onClick={() => setIsRunning(true)}
+                        >
+                            ▶️ Resume Game
+                        </button>
+                    </div>
+                </div>
+            )}
+
             <div className="game-header">
                 <h2>Difficulty: {game.difficulty}</h2>
                 <div className="game-stats">
@@ -216,11 +233,11 @@ const GameBoard = ({ gameId, initialGame }) => {
                         {num}
                     </button>
                 ))}
-                <button 
+                <button
                     className="number-btn clear-btn"
                     onClick={() => handleNumberInput(0)}
                 >
-                    Clear
+                    ✕
                 </button>
             </div>
 
