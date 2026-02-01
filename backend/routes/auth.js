@@ -8,6 +8,7 @@ const { authMiddleware } = require('../middleware/auth');
 const {
     register,
     login,
+    guestLogin,
     me,
     logout,
     refresh
@@ -16,6 +17,7 @@ const {
 // Public routes
 router.post('/register', register);
 router.post('/login', login);
+router.post('/guest-login', guestLogin);
 router.post('/refresh', refresh);
 
 // Protected routes

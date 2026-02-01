@@ -133,3 +133,53 @@
         padding: 2rem;
     }
 }
+
+/* OR Divider */
+.or-divider {
+    display: flex;
+    align-items: center;
+    text-align: center;
+    margin: 1.5rem 0;
+    color: #9CA3AF;
+}
+
+.or-divider::before,
+.or-divider::after {
+    content: '';
+    flex: 1;
+    border-bottom: 1px solid #E5E7EB;
+}
+
+.or-divider span {
+    padding: 0 1rem;
+    font-weight: 600;
+    font-size: 0.875rem;
+}
+
+/* Guest Login Button */
+.btn-guest {
+    background: linear-gradient(135deg, #F59E0B 0%, #D97706 100%);
+    border: none;
+    transition: all 0.3s;
+}
+
+.btn-guest:hover:not(:disabled) {
+    background: linear-gradient(135deg, #D97706 0%, #B45309 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 16px rgba(245, 158, 11, 0.4);
+}
+
+.btn-guest:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+/* Guest Info */
+.guest-info {
+    text-align: center;
+    margin-top: 0.75rem;
+    margin-bottom: 1rem;
+    color: #9CA3AF;
+    font-size: 0.875rem;
+    font-style: italic;
+}

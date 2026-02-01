@@ -204,6 +204,67 @@ const logout = async (req, res) => {
     res.json({ message: 'Logout successful' });
 };
 
+// Guest login - create temporary guest account
+const guestLogin = async (req, res) => {
+    try {
+        // Generate random guest username
+        const guestId = Math.random().toString(36).substring(2, 10);
+        const guestUsername = `guest_${guestId}`;
+        const guestEmail = `${guestUsername}@guest.sudoku.app`;
+        const guestPassword = Math.random().toString(36).substring(2, 15);
+        
+        // Hash password
+        const password_hash = await bcrypt.hash(guestPassword, 10);
+        
+        // Create guest user with transaction
+        const result = await db.transaction(async (client) => {
+            // Insert guest user
+            const userResult = await client.query(
+                `INSERT INTO users (email, username, password_hash, full_name, is_guest)
+                 VALUES ($1, $2, $3, $4, true)
+                 RETURNING id, email, username, full_name, created_at`,
+                [guestEmail, guestUsername, password_hash, 'Guest User']
+            );
+            
+            const user = userResult.rows[0];
+            
+            // Create initial statistics
+            await client.query(
+                `INSERT INTO user_statistics (user_id) VALUES ($1)`,
+                [user.id]
+            );
+            
+            // Create initial settings
+            await client.query(
+                `INSERT INTO user_settings (user_id) VALUES ($1)`,
+                [user.id]
+            );
+            
+            return user;
+        });
+        
+        // Generate token
+        const token = generateToken(result);
+        
+        res.status(201).json({
+            message: 'Guest login successful',
+            token,
+            user: {
+                id: result.id,
+                email: result.email,
+                username: result.username,
+                full_name: result.full_name,
+                is_guest: true,
+                created_at: result.created_at
+            }
+        });
+        
+    } catch (error) {
+        console.error('Guest login error:', error);
+        res.status(500).json({ error: 'Guest login failed' });
+    }
+};
+
 // Refresh token
 const refresh = async (req, res) => {
     try {
@@ -242,6 +303,7 @@ const refresh = async (req, res) => {
 module.exports = {
     register,
     login,
+    guestLogin,
     me,
     logout,
     refresh

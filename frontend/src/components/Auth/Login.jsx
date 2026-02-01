@@ -13,9 +13,10 @@ const Login = () => {
         password: ''
     });
     const [loading, setLoading] = useState(false);
+    const [guestLoading, setGuestLoading] = useState(false);
     const [error, setError] = useState('');
 
-    const { login } = useAuth();
+    const { login, guestLogin } = useAuth();
     const navigate = useNavigate();
 
     const handleChange = (e) => {
@@ -37,6 +38,20 @@ const Login = () => {
             setError(err.message);
         } finally {
             setLoading(false);
+        }
+    };
+
+    const handleGuestLogin = async () => {
+        setError('');
+        setGuestLoading(true);
+
+        try {
+            await guestLogin();
+            navigate('/');
+        } catch (err) {
+            setError(err.message);
+        } finally {
+            setGuestLoading(false);
         }
     };
 
@@ -83,11 +98,28 @@ const Login = () => {
                     <button 
                         type="submit" 
                         className="btn btn-primary btn-large"
-                        disabled={loading}
+                        disabled={loading || guestLoading}
                     >
                         {loading ? 'Logging in...' : 'Login'}
                     </button>
                 </form>
+
+                <div className="or-divider">
+                    <span>OR</span>
+                </div>
+
+                <button 
+                    type="button"
+                    className="btn btn-secondary btn-large btn-guest"
+                    onClick={handleGuestLogin}
+                    disabled={loading || guestLoading}
+                >
+                    {guestLoading ? 'Creating Guest Account...' : '🎮 Continue as Guest'}
+                </button>
+
+                <p className="guest-info">
+                    Try the app without registration! Guest progress is temporary.
+                </p>
 
                 <p className="auth-link">
                     Don't have an account? <Link to="/register">Register here</Link>

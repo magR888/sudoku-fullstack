@@ -47,6 +47,19 @@ export const AuthProvider = ({ children }) => {
         }
     };
 
+    const guestLogin = async () => {
+        try {
+            setError(null);
+            const data = await authService.guestLogin();
+            setUser(data.user);
+            return data;
+        } catch (err) {
+            const message = err.response?.data?.error || 'Guest login failed';
+            setError(message);
+            throw new Error(message);
+        }
+    };
+
     const logout = () => {
         authService.logout();
         setUser(null);
@@ -62,6 +75,7 @@ export const AuthProvider = ({ children }) => {
         error,
         register,
         login,
+        guestLogin,
         logout,
         isAuthenticated
     };

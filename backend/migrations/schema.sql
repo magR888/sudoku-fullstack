@@ -18,7 +18,8 @@ CREATE TABLE users (
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     last_login TIMESTAMP,
     is_active BOOLEAN DEFAULT true,
-    email_verified BOOLEAN DEFAULT false
+    email_verified BOOLEAN DEFAULT false,
+    is_guest BOOLEAN DEFAULT false
 );
 
 CREATE INDEX idx_users_email ON users(email);

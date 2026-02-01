@@ -25,6 +25,16 @@ const authService = {
         return response.data;
     },
 
+    // Guest login
+    guestLogin: async () => {
+        const response = await api.post('/auth/guest-login');
+        if (response.data.token) {
+            localStorage.setItem('token', response.data.token);
+            localStorage.setItem('user', JSON.stringify(response.data.user));
+        }
+        return response.data;
+    },
+
     // Logout user
     logout: () => {
         localStorage.removeItem('token');
