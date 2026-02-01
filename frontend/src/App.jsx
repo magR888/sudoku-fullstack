@@ -12,6 +12,7 @@ import GamePage from './pages/GamePage';
 import StatisticsPage from './pages/StatisticsPage';
 import TutorialsPage from './pages/TutorialsPage';
 import TutorialDetailPage from './pages/TutorialDetailPage';
+import TechniqueLearningPage from './pages/TechniqueLearningPage';
 import Login from './components/Auth/Login';
 import Register from './components/Auth/Register';
 
@@ -87,6 +88,9 @@ function AppRoutes() {
             {/* Tutorial Routes - Public */}
             <Route path="/tutorials" element={<TutorialsPage />} />
             <Route path="/tutorials/:id" element={<TutorialDetailPage />} />
+            
+            {/* Technique Learning - Public */}
+            <Route path="/learn-techniques" element={<TechniqueLearningPage />} />
 
             {/* Catch all - redirect to home */}
             <Route path="*" element={<Navigate to="/" />} />

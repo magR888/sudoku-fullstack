@@ -1,0 +1,550 @@
+/**
+ * TECHNIQUELEARNING.CSS - Styling for Interactive Technique Learning
+ */
+
+.technique-learning-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+}
+
+/* Technique List View */
+.technique-list h2 {
+    font-size: 2.5rem;
+    color: #1F2937;
+    margin-bottom: 1rem;
+    text-align: center;
+}
+
+.intro-text {
+    text-align: center;
+    color: #6B7280;
+    font-size: 1.1rem;
+    margin-bottom: 3rem;
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.techniques-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 2rem;
+    margin-top: 2rem;
+}
+
+.technique-card {
+    background: white;
+    border-radius: 16px;
+    padding: 2rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s;
+    cursor: pointer;
+    border: 2px solid transparent;
+}
+
+.technique-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
+    border-color: #4F46E5;
+}
+
+.technique-icon {
+    font-size: 3rem;
+    text-align: center;
+    margin-bottom: 1rem;
+}
+
+.technique-card h3 {
+    font-size: 1.5rem;
+    color: #1F2937;
+    margin-bottom: 0.75rem;
+    text-align: center;
+}
+
+.difficulty-badge {
+    display: inline-block;
+    padding: 0.4rem 1rem;
+    border-radius: 20px;
+    font-size: 0.875rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+}
+
+.difficulty-badge.beginner {
+    background: #DBEAFE;
+    color: #1E40AF;
+}
+
+.difficulty-badge.intermediate {
+    background: #FEF3C7;
+    color: #92400E;
+}
+
+.difficulty-badge.advanced {
+    background: #FEE2E2;
+    color: #991B1B;
+}
+
+.technique-card p {
+    color: #6B7280;
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
+    text-align: center;
+}
+
+.learn-btn {
+    width: 100%;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border: none;
+    padding: 0.875rem 1.5rem;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.learn-btn:hover {
+    transform: scale(1.05);
+    box-shadow: 0 8px 16px rgba(102, 126, 234, 0.4);
+}
+
+/* Technique Detail View */
+.technique-detail {
+    background: white;
+    border-radius: 16px;
+    padding: 2rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.back-btn {
+    background: #F3F4F6;
+    color: #4B5563;
+    border: none;
+    padding: 0.75rem 1.5rem;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s;
+    margin-bottom: 2rem;
+}
+
+.back-btn:hover {
+    background: #E5E7EB;
+    transform: translateX(-4px);
+}
+
+.technique-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+}
+
+.technique-title {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.technique-icon-large {
+    font-size: 3.5rem;
+}
+
+.technique-title h2 {
+    font-size: 2rem;
+    color: #1F2937;
+    margin: 0;
+}
+
+/* Progress Bar */
+.progress-container {
+    margin-bottom: 2rem;
+}
+
+.progress-bar {
+    height: 8px;
+    background: #E5E7EB;
+    border-radius: 4px;
+    overflow: hidden;
+    margin-bottom: 0.5rem;
+}
+
+.progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+    transition: width 0.3s;
+}
+
+.progress-text {
+    font-size: 0.875rem;
+    color: #6B7280;
+}
+
+/* Step Content */
+.step-content {
+    margin-bottom: 2rem;
+}
+
+.step-content h3 {
+    font-size: 1.75rem;
+    color: #1F2937;
+    margin-bottom: 1rem;
+}
+
+.step-explanation {
+    font-size: 1.1rem;
+    color: #4B5563;
+    line-height: 1.8;
+    margin-bottom: 2rem;
+    padding: 1.5rem;
+    background: #F9FAFB;
+    border-left: 4px solid #4F46E5;
+    border-radius: 8px;
+}
+
+/* Technique Grid */
+.technique-grid {
+    display: grid;
+    grid-template-columns: repeat(9, 50px);
+    grid-template-rows: repeat(9, 50px);
+    gap: 0;
+    margin: 2rem auto;
+    justify-content: center;
+    border: 3px solid #1F2937;
+}
+
+.technique-cell {
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    font-weight: 600;
+    border: 1px solid #D1D5DB;
+    background: white;
+    transition: all 0.3s;
+}
+
+/* Box borders */
+.technique-cell:nth-child(9n+3),
+.technique-cell:nth-child(9n+6) {
+    border-right: 3px solid #1F2937;
+}
+
+.technique-cell:nth-child(n+19):nth-child(-n+27),
+.technique-cell:nth-child(n+46):nth-child(-n+54) {
+    border-bottom: 3px solid #1F2937;
+}
+
+.technique-cell.filled {
+    color: #1F2937;
+    background: #F3F4F6;
+}
+
+.technique-cell.highlighted {
+    background: #FEF3C7;
+    border: 2px solid #F59E0B;
+    animation: pulse 1.5s infinite;
+}
+
+.technique-cell.row-highlight {
+    background: #DBEAFE;
+}
+
+.technique-cell.col-highlight {
+    background: #E0E7FF;
+}
+
+.technique-cell.box-highlight {
+    background: #ECFDF5;
+}
+
+.technique-cell.answer-cell {
+    background: #10B981 !important;
+    color: white !important;
+    font-size: 2rem;
+    animation: popIn 0.5s;
+}
+
+@keyframes pulse {
+    0%, 100% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.05);
+    }
+}
+
+@keyframes popIn {
+    0% {
+        transform: scale(0);
+    }
+    50% {
+        transform: scale(1.2);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+/* Instruction Box */
+.instruction-box {
+    background: #EEF2FF;
+    border-left: 4px solid #4F46E5;
+    padding: 1.5rem;
+    border-radius: 8px;
+    margin-top: 2rem;
+    font-size: 1.1rem;
+    color: #1E40AF;
+    font-weight: 500;
+}
+
+.instruction-box.success {
+    background: #ECFDF5;
+    border-left-color: #10B981;
+    color: #047857;
+}
+
+.success-icon {
+    font-size: 1.5rem;
+    margin-right: 0.5rem;
+}
+
+/* Used Numbers */
+.used-numbers {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+    margin-top: 1.5rem;
+    padding: 1.5rem;
+    background: #F9FAFB;
+    border-radius: 8px;
+}
+
+.number-group {
+    flex: 1;
+    min-width: 200px;
+}
+
+.number-group strong {
+    color: #1F2937;
+    display: block;
+    margin-bottom: 0.5rem;
+}
+
+/* Candidates */
+.candidates-box {
+    background: #FEF3C7;
+    border-left: 4px solid #F59E0B;
+    padding: 1.5rem;
+    border-radius: 8px;
+    margin-top: 1.5rem;
+    font-size: 1.1rem;
+    color: #92400E;
+}
+
+.candidates-box strong {
+    color: #78350F;
+}
+
+/* Navigation */
+.step-navigation {
+    display: flex;
+    gap: 1rem;
+    justify-content: space-between;
+    margin-top: 2rem;
+}
+
+.nav-btn {
+    flex: 1;
+    padding: 1rem 2rem;
+    border: 2px solid #E5E7EB;
+    background: white;
+    color: #4B5563;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.nav-btn:hover:not(:disabled) {
+    border-color: #4F46E5;
+    color: #4F46E5;
+    transform: translateY(-2px);
+}
+
+.nav-btn.primary {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border: none;
+}
+
+.nav-btn.primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 16px rgba(102, 126, 234, 0.4);
+}
+
+.nav-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+/* Practice Section */
+.practice-section {
+    margin-top: 3rem;
+    padding: 2rem;
+    background: #F9FAFB;
+    border-radius: 12px;
+    border: 2px solid #4F46E5;
+}
+
+.practice-section h3 {
+    font-size: 1.75rem;
+    color: #1F2937;
+    margin-bottom: 2rem;
+    text-align: center;
+}
+
+.practice-controls {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    margin-top: 2rem;
+}
+
+.hint-btn,
+.answer-btn {
+    padding: 0.875rem 2rem;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.3s;
+    border: none;
+}
+
+.hint-btn {
+    background: #FEF3C7;
+    color: #92400E;
+}
+
+.hint-btn:hover {
+    background: #FDE68A;
+    transform: translateY(-2px);
+}
+
+.answer-btn {
+    background: #DBEAFE;
+    color: #1E40AF;
+}
+
+.answer-btn:hover {
+    background: #BFDBFE;
+    transform: translateY(-2px);
+}
+
+/* Answer Reveal */
+.answer-reveal {
+    margin-top: 2rem;
+    padding: 2rem;
+    background: white;
+    border-radius: 12px;
+    border: 2px solid #10B981;
+    animation: slideDown 0.3s;
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.answer-reveal h4 {
+    color: #047857;
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+.answer-reveal p {
+    font-size: 1.2rem;
+    color: #1F2937;
+}
+
+.answer-value {
+    display: inline-block;
+    background: #10B981;
+    color: white;
+    padding: 0.5rem 1.5rem;
+    border-radius: 8px;
+    font-size: 2rem;
+    margin-left: 0.5rem;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .technique-learning-container {
+        padding: 1rem;
+    }
+
+    .techniques-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .technique-grid {
+        grid-template-columns: repeat(9, 35px);
+        grid-template-rows: repeat(9, 35px);
+    }
+
+    .technique-cell {
+        width: 35px;
+        height: 35px;
+        font-size: 1.2rem;
+    }
+
+    .technique-detail {
+        padding: 1rem;
+    }
+
+    .technique-title h2 {
+        font-size: 1.5rem;
+    }
+
+    .technique-icon-large {
+        font-size: 2.5rem;
+    }
+
+    .step-navigation {
+        flex-direction: column;
+    }
+
+    .practice-controls {
+        flex-direction: column;
+    }
+
+    .used-numbers {
+        flex-direction: column;
+    }
+}
+
+@media (max-width: 480px) {
+    .technique-grid {
+        grid-template-columns: repeat(9, 30px);
+        grid-template-rows: repeat(9, 30px);
+    }
+
+    .technique-cell {
+        width: 30px;
+        height: 30px;
+        font-size: 1rem;
+    }
+}

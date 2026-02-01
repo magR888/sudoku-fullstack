@@ -1,0 +1,39 @@
+/**
+ * TECHNIQUELEARNINGPAGE.CSS - Page styling for Technique Learning
+ */
+
+.technique-learning-page {
+    min-height: 100vh;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    padding: 2rem 0;
+}
+
+.page-header {
+    text-align: center;
+    color: white;
+    margin-bottom: 3rem;
+    padding: 2rem;
+}
+
+.page-header h1 {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+}
+
+.page-header .subtitle {
+    font-size: 1.3rem;
+    opacity: 0.95;
+    max-width: 700px;
+    margin: 0 auto;
+}
+
+@media (max-width: 768px) {
+    .page-header h1 {
+        font-size: 2rem;
+    }
+
+    .page-header .subtitle {
+        font-size: 1.1rem;
+    }
+}
