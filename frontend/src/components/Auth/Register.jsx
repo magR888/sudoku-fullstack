@@ -34,12 +34,12 @@ const Register = () => {
 
         // Validation
         if (formData.password !== formData.confirmPassword) {
-            setError('Passwords do not match');
+            setError('Kata sandi tidak cocok');
             return;
         }
 
         if (formData.password.length < 6) {
-            setError('Password must be at least 6 characters');
+            setError('Kata sandi minimal 6 karakter');
             return;
         }
 
@@ -59,9 +59,9 @@ const Register = () => {
     return (
         <div className="auth-container">
             <div className="auth-card">
-                <h1 className="auth-title">🎓 Sudoku Learning Platform</h1>
-                <h2>Register</h2>
-                
+                <h1 className="auth-title">🎓 Platform Belajar Sudoku</h1>
+                <h2>Daftar</h2>
+
                 {error && (
                     <div className="error-message">
                         {error}
@@ -70,19 +70,19 @@ const Register = () => {
 
                 <form onSubmit={handleSubmit} className="auth-form">
                     <div className="form-group">
-                        <label htmlFor="full_name">Full Name</label>
+                        <label htmlFor="full_name">Nama Lengkap</label>
                         <input
                             type="text"
                             id="full_name"
                             name="full_name"
                             value={formData.full_name}
                             onChange={handleChange}
-                            placeholder="John Doe"
+                            placeholder="Nama Anda"
                         />
                     </div>
 
                     <div className="form-group">
-                        <label htmlFor="username">Username *</label>
+                        <label htmlFor="username">Nama Pengguna *</label>
                         <input
                             type="text"
                             id="username"
@@ -90,7 +90,7 @@ const Register = () => {
                             value={formData.username}
                             onChange={handleChange}
                             required
-                            placeholder="johndoe"
+                            placeholder="namapengguna"
                         />
                     </div>
 
@@ -103,12 +103,12 @@ const Register = () => {
                             value={formData.email}
                             onChange={handleChange}
                             required
-                            placeholder="john@example.com"
+                            placeholder="email@contoh.com"
                         />
                     </div>
 
                     <div className="form-group">
-                        <label htmlFor="password">Password *</label>
+                        <label htmlFor="password">Kata Sandi *</label>
                         <input
                             type="password"
                             id="password"
@@ -122,7 +122,7 @@ const Register = () => {
                     </div>
 
                     <div className="form-group">
-                        <label htmlFor="confirmPassword">Confirm Password *</label>
+                        <label htmlFor="confirmPassword">Konfirmasi Kata Sandi *</label>
                         <input
                             type="password"
                             id="confirmPassword"
@@ -135,17 +135,17 @@ const Register = () => {
                         />
                     </div>
 
-                    <button 
-                        type="submit" 
+                    <button
+                        type="submit"
                         className="btn btn-primary btn-large"
                         disabled={loading}
                     >
-                        {loading ? 'Registering...' : 'Register'}
+                        {loading ? 'Mendaftar...' : 'Daftar'}
                     </button>
                 </form>
 
                 <p className="auth-link">
-                    Already have an account? <Link to="/login">Login here</Link>
+                    Sudah punya akun? <Link to="/login">Masuk di sini</Link>
                 </p>
             </div>
         </div>

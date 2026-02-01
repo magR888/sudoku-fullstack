@@ -58,9 +58,9 @@ const Login = () => {
     return (
         <div className="auth-container">
             <div className="auth-card">
-                <h1 className="auth-title">🎓 Sudoku Learning Platform</h1>
-                <h2>Login</h2>
-                
+                <h1 className="auth-title">🎓 Platform Belajar Sudoku</h1>
+                <h2>Masuk</h2>
+
                 {error && (
                     <div className="error-message">
                         {error}
@@ -77,12 +77,12 @@ const Login = () => {
                             value={formData.email}
                             onChange={handleChange}
                             required
-                            placeholder="your@email.com"
+                            placeholder="email@anda.com"
                         />
                     </div>
 
                     <div className="form-group">
-                        <label htmlFor="password">Password</label>
+                        <label htmlFor="password">Kata Sandi</label>
                         <input
                             type="password"
                             id="password"
@@ -95,34 +95,34 @@ const Login = () => {
                         />
                     </div>
 
-                    <button 
-                        type="submit" 
+                    <button
+                        type="submit"
                         className="btn btn-primary btn-large"
                         disabled={loading || guestLoading}
                     >
-                        {loading ? 'Logging in...' : 'Login'}
+                        {loading ? 'Sedang masuk...' : 'Masuk'}
                     </button>
                 </form>
 
                 <div className="or-divider">
-                    <span>OR</span>
+                    <span>ATAU</span>
                 </div>
 
-                <button 
+                <button
                     type="button"
                     className="btn btn-secondary btn-large btn-guest"
                     onClick={handleGuestLogin}
                     disabled={loading || guestLoading}
                 >
-                    {guestLoading ? 'Creating Guest Account...' : '🎮 Continue as Guest'}
+                    {guestLoading ? 'Membuat Akun Tamu...' : '🎮 Lanjutkan sebagai Tamu'}
                 </button>
 
                 <p className="guest-info">
-                    Try the app without registration! Guest progress is temporary.
+                    Coba aplikasi tanpa registrasi! Progres tamu bersifat sementara.
                 </p>
 
                 <p className="auth-link">
-                    Don't have an account? <Link to="/register">Register here</Link>
+                    Belum punya akun? <Link to="/register">Daftar di sini</Link>
                 </p>
             </div>
         </div>

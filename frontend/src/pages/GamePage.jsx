@@ -23,7 +23,7 @@ const GamePage = () => {
             const gameData = await gameService.getGame(id);
             setGame(gameData);
         } catch (err) {
-            setError(err.response?.data?.error || 'Failed to load game');
+            setError(err.response?.data?.error || 'Gagal memuat permainan');
         } finally {
             setLoading(false);
         }
@@ -33,7 +33,7 @@ const GamePage = () => {
         return (
             <div className="game-page">
                 <div className="loading-container">
-                    <h2>Loading game...</h2>
+                    <h2>Memuat permainan...</h2>
                 </div>
             </div>
         );
@@ -43,9 +43,9 @@ const GamePage = () => {
         return (
             <div className="game-page">
                 <div className="error-container">
-                    <h2>Error</h2>
+                    <h2>Kesalahan</h2>
                     <p>{error}</p>
-                    <a href="/">Back to Home</a>
+                    <a href="/">Kembali ke Beranda</a>
                 </div>
             </div>
         );

@@ -18,7 +18,7 @@ const createGame = async (req, res) => {
         // Validate difficulty
         const validDifficulties = ['very-easy', 'easy', 'medium', 'hard', 'expert'];
         if (!validDifficulties.includes(difficulty)) {
-            return res.status(400).json({ error: 'Invalid difficulty level' });
+            return res.status(400).json({ error: 'Tingkat kesulitan tidak valid' });
         }
 
         // Generate puzzle
@@ -35,7 +35,7 @@ const createGame = async (req, res) => {
         const game = result.rows[0];
 
         res.status(201).json({
-            message: 'Game created successfully',
+            message: 'Permainan berhasil dibuat',
             game: {
                 id: game.id,
                 difficulty: game.difficulty,
@@ -51,7 +51,7 @@ const createGame = async (req, res) => {
 
     } catch (error) {
         console.error('Create game error:', error);
-        res.status(500).json({ error: 'Failed to create game' });
+        res.status(500).json({ error: 'Gagal membuat permainan' });
     }
 };
 
@@ -71,7 +71,7 @@ const getGame = async (req, res) => {
         );
 
         if (result.rows.length === 0) {
-            return res.status(404).json({ error: 'Game not found' });
+            return res.status(404).json({ error: 'Permainan tidak ditemukan' });
         }
 
         const game = result.rows[0];
@@ -95,7 +95,7 @@ const getGame = async (req, res) => {
 
     } catch (error) {
         console.error('Get game error:', error);
-        res.status(500).json({ error: 'Failed to get game' });
+        res.status(500).json({ error: 'Gagal memuat permainan' });
     }
 };
 
@@ -115,17 +115,17 @@ const updateGame = async (req, res) => {
         );
 
         if (result.rows.length === 0) {
-            return res.status(404).json({ error: 'Game not found' });
+            return res.status(404).json({ error: 'Permainan tidak ditemukan' });
         }
 
         res.json({
-            message: 'Game updated successfully',
+            message: 'Permainan berhasil diperbarui',
             game: result.rows[0]
         });
 
     } catch (error) {
         console.error('Update game error:', error);
-        res.status(500).json({ error: 'Failed to update game' });
+        res.status(500).json({ error: 'Gagal memperbarui permainan' });
     }
 };
 
@@ -138,7 +138,7 @@ const makeMove = async (req, res) => {
 
         // Validate input
         if (row < 0 || row > 8 || col < 0 || col > 8 || value < 0 || value > 9) {
-            return res.status(400).json({ error: 'Invalid move parameters' });
+            return res.status(400).json({ error: 'Parameter langkah tidak valid' });
         }
 
         // Get game
@@ -148,7 +148,7 @@ const makeMove = async (req, res) => {
         );
 
         if (gameResult.rows.length === 0) {
-            return res.status(404).json({ error: 'Game not found' });
+            return res.status(404).json({ error: 'Permainan tidak ditemukan' });
         }
 
         const game = gameResult.rows[0];
@@ -158,7 +158,7 @@ const makeMove = async (req, res) => {
 
         // Check if cell is editable (not initial)
         if (initialGrid[row][col] !== 0) {
-            return res.status(400).json({ error: 'Cannot modify initial cell' });
+            return res.status(400).json({ error: 'Tidak dapat mengubah sel awal' });
         }
 
         // Check if move is correct
@@ -192,7 +192,7 @@ const makeMove = async (req, res) => {
         }
 
         res.json({
-            message: 'Move recorded',
+            message: 'Langkah tercatat',
             isCorrect,
             conflicts,
             currentGrid
@@ -200,7 +200,7 @@ const makeMove = async (req, res) => {
 
     } catch (error) {
         console.error('Make move error:', error);
-        res.status(500).json({ error: 'Failed to make move' });
+        res.status(500).json({ error: 'Gagal melakukan langkah' });
     }
 };
 
@@ -375,7 +375,7 @@ const getHint = async (req, res) => {
         );
 
         if (result.rows.length === 0) {
-            return res.status(404).json({ error: 'Game not found' });
+            return res.status(404).json({ error: 'Permainan tidak ditemukan' });
         }
 
         const game = result.rows[0];
@@ -400,7 +400,7 @@ const getHint = async (req, res) => {
         }
 
         if (!bestCell) {
-            return res.status(400).json({ error: 'No empty cells' });
+            return res.status(400).json({ error: 'Tidak ada sel kosong' });
         }
 
         const hintValue = solutionGrid[bestCell.row][bestCell.col];
@@ -433,7 +433,7 @@ const getHint = async (req, res) => {
 
     } catch (error) {
         console.error('Get hint error:', error);
-        res.status(500).json({ error: 'Failed to get hint' });
+        res.status(500).json({ error: 'Gagal mendapatkan petunjuk' });
     }
 };
 
@@ -452,7 +452,7 @@ const completeGame = async (req, res) => {
             );
 
             if (gameResult.rows.length === 0) {
-                throw new Error('Game not found');
+                throw new Error('Permainan tidak ditemukan');
             }
 
             const game = gameResult.rows[0];
@@ -473,7 +473,7 @@ const completeGame = async (req, res) => {
             }
 
             if (!isComplete) {
-                return res.status(400).json({ error: 'Game is not complete' });
+                return res.status(400).json({ error: 'Permainan belum selesai' });
             }
 
             // Calculate score
@@ -497,18 +497,75 @@ const completeGame = async (req, res) => {
                 [timeElapsed, hintsUsed, errorsMade, score, id]
             );
 
+            // Get current statistics for streak and best times calculation
+            const statsResult = await client.query(
+                `SELECT current_streak, longest_streak, last_play_date, best_times, games_by_difficulty
+                 FROM user_statistics WHERE user_id = $1`,
+                [userId]
+            );
+
+            const today = new Date();
+            today.setHours(0, 0, 0, 0);
+            const todayStr = today.toISOString().split('T')[0];
+
+            let currentStreak = 1;
+            let longestStreak = 1;
+            let bestTimes = {};
+            let gamesByDifficulty = {};
+
+            if (statsResult.rows.length > 0) {
+                const stats = statsResult.rows[0];
+                bestTimes = stats.best_times || {};
+                gamesByDifficulty = stats.games_by_difficulty || {};
+                longestStreak = stats.longest_streak || 0;
+
+                const lastPlayDate = stats.last_play_date;
+                if (lastPlayDate) {
+                    const lastDate = new Date(lastPlayDate);
+                    lastDate.setHours(0, 0, 0, 0);
+                    const diffDays = Math.floor((today - lastDate) / (1000 * 60 * 60 * 24));
+
+                    if (diffDays === 0) {
+                        // Same day, keep current streak
+                        currentStreak = stats.current_streak || 1;
+                    } else if (diffDays === 1) {
+                        // Consecutive day, increment streak
+                        currentStreak = (stats.current_streak || 0) + 1;
+                    }
+                    // diffDays > 1: streak resets to 1 (default)
+                }
+            }
+
+            if (currentStreak > longestStreak) {
+                longestStreak = currentStreak;
+            }
+
+            // Update best times
+            const difficulty = game.difficulty;
+            if (!bestTimes[difficulty] || timeElapsed < bestTimes[difficulty]) {
+                bestTimes[difficulty] = timeElapsed;
+            }
+
+            // Update games by difficulty
+            gamesByDifficulty[difficulty] = (gamesByDifficulty[difficulty] || 0) + 1;
+
             // Update user statistics
             await client.query(
-                `INSERT INTO user_statistics (user_id, total_games, games_won, total_time, total_hints, total_errors)
-                 VALUES ($1, 1, 1, $2, $3, $4)
+                `INSERT INTO user_statistics (user_id, total_games, games_won, total_time, total_hints, total_errors, current_streak, longest_streak, last_play_date, best_times, games_by_difficulty)
+                 VALUES ($1, 1, 1, $2, $3, $4, $5, $6, $7, $8, $9)
                  ON CONFLICT (user_id)
                  DO UPDATE SET
                      total_games = user_statistics.total_games + 1,
                      games_won = user_statistics.games_won + 1,
                      total_time = user_statistics.total_time + $2,
                      total_hints = user_statistics.total_hints + $3,
-                     total_errors = user_statistics.total_errors + $4`,
-                [userId, timeElapsed, hintsUsed, errorsMade]
+                     total_errors = user_statistics.total_errors + $4,
+                     current_streak = $5,
+                     longest_streak = $6,
+                     last_play_date = $7,
+                     best_times = $8,
+                     games_by_difficulty = $9`,
+                [userId, timeElapsed, hintsUsed, errorsMade, currentStreak, longestStreak, todayStr, JSON.stringify(bestTimes), JSON.stringify(gamesByDifficulty)]
             );
 
             // Add to leaderboard if qualifies
@@ -521,7 +578,7 @@ const completeGame = async (req, res) => {
             }
 
             res.json({
-                message: 'Game completed successfully',
+                message: 'Permainan berhasil diselesaikan',
                 score,
                 timeElapsed,
                 hintsUsed,
@@ -532,7 +589,7 @@ const completeGame = async (req, res) => {
 
     } catch (error) {
         console.error('Complete game error:', error);
-        res.status(500).json({ error: 'Failed to complete game' });
+        res.status(500).json({ error: 'Gagal menyelesaikan permainan' });
     }
 };
 
@@ -567,7 +624,7 @@ const getUserGames = async (req, res) => {
 
     } catch (error) {
         console.error('Get user games error:', error);
-        res.status(500).json({ error: 'Failed to get games' });
+        res.status(500).json({ error: 'Gagal memuat daftar permainan' });
     }
 };
 

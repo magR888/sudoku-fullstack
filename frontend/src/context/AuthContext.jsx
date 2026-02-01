@@ -28,7 +28,7 @@ export const AuthProvider = ({ children }) => {
             setUser(data.user);
             return data;
         } catch (err) {
-            const message = err.response?.data?.error || 'Registration failed';
+            const message = err.response?.data?.error || 'Pendaftaran gagal';
             setError(message);
             throw new Error(message);
         }
@@ -41,7 +41,7 @@ export const AuthProvider = ({ children }) => {
             setUser(data.user);
             return data;
         } catch (err) {
-            const message = err.response?.data?.error || 'Login failed';
+            const message = err.response?.data?.error || 'Gagal masuk';
             setError(message);
             throw new Error(message);
         }
@@ -54,7 +54,7 @@ export const AuthProvider = ({ children }) => {
             setUser(data.user);
             return data;
         } catch (err) {
-            const message = err.response?.data?.error || 'Guest login failed';
+            const message = err.response?.data?.error || 'Gagal masuk sebagai tamu';
             setError(message);
             throw new Error(message);
         }

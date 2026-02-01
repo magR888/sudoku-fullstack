@@ -73,10 +73,10 @@ const GameBoard = ({ gameId, initialGame }) => {
             setGame({ ...game, currentGrid: newGrid });
 
             if (!result.isCorrect && number !== 0) {
-                setMessage('❌ Incorrect! Try again.');
+                setMessage('❌ Salah! Coba lagi.');
                 setTimeout(() => setMessage(''), 2000);
             } else if (number !== 0) {
-                setMessage('✓ Correct!');
+                setMessage('✓ Benar!');
                 setTimeout(() => setMessage(''), 1000);
             }
 
@@ -84,7 +84,7 @@ const GameBoard = ({ gameId, initialGame }) => {
             checkCompletion(newGrid);
 
         } catch (err) {
-            setError(err.response?.data?.error || 'Move failed');
+            setError(err.response?.data?.error || 'Langkah gagal');
         }
     };
 
@@ -116,11 +116,11 @@ const GameBoard = ({ gameId, initialGame }) => {
                 errorsMade: game.errorsMade || 0
             });
 
-            alert(`🎉 Congratulations!\n\nScore: ${result.score}\nTime: ${formatTime(timeElapsed)}`);
+            alert(`🎉 Selamat!\n\nSkor: ${result.score}\nWaktu: ${formatTime(timeElapsed)}`);
             window.location.href = '/statistics';
 
         } catch (err) {
-            setError(err.response?.data?.error || 'Failed to complete game');
+            setError(err.response?.data?.error || 'Gagal menyelesaikan permainan');
             setIsRunning(true);
         }
     };
@@ -143,11 +143,11 @@ const GameBoard = ({ gameId, initialGame }) => {
             });
 
             setSelectedCell({ row: hint.row, col: hint.col });
-            setMessage(`💡 Hint applied! See explanation below.`);
+            setMessage(`💡 Petunjuk diterapkan! Lihat penjelasan di bawah.`);
             setTimeout(() => setMessage(''), 5000);
 
         } catch (err) {
-            setError(err.response?.data?.error || 'Hint failed');
+            setError(err.response?.data?.error || 'Petunjuk gagal');
         }
     };
 
@@ -186,27 +186,27 @@ const GameBoard = ({ gameId, initialGame }) => {
                 <div className="pause-overlay">
                     <div className="pause-modal">
                         <div className="pause-icon">⏸️</div>
-                        <h3>Game Paused</h3>
-                        <p>Take a break! Your progress is saved.</p>
+                        <h3>Permainan Dijeda</h3>
+                        <p>Istirahat sejenak! Progres Anda tersimpan.</p>
                         <button
                             className="btn btn-primary btn-large"
                             onClick={() => setIsRunning(true)}
                         >
-                            ▶️ Resume Game
+                            ▶️ Lanjutkan Permainan
                         </button>
                     </div>
                 </div>
             )}
 
             <div className="game-header">
-                <h2>Difficulty: {game.difficulty}</h2>
+                <h2>Kesulitan: {game.difficulty}</h2>
                 <div className="game-stats">
                     <div className="stat">
-                        <span className="stat-label">Time:</span>
+                        <span className="stat-label">Waktu:</span>
                         <span className="stat-value">{formatTime(timeElapsed)}</span>
                     </div>
                     <div className="stat">
-                        <span className="stat-label">Hints:</span>
+                        <span className="stat-label">Petunjuk:</span>
                         <span className="stat-value">{game.hintsUsed || 0}</span>
                     </div>
                 </div>
@@ -243,16 +243,16 @@ const GameBoard = ({ gameId, initialGame }) => {
 
             <div className="game-controls">
                 <button className="btn btn-secondary" onClick={requestHint}>
-                    💡 Hint
+                    💡 Petunjuk
                 </button>
                 <button className="btn btn-secondary" onClick={saveGame}>
-                    💾 Save
+                    💾 Simpan
                 </button>
-                <button 
+                <button
                     className="btn btn-warning"
                     onClick={() => setIsRunning(!isRunning)}
                 >
-                    {isRunning ? '⏸️ Pause' : '▶️ Resume'}
+                    {isRunning ? '⏸️ Jeda' : '▶️ Lanjutkan'}
                 </button>
             </div>
 

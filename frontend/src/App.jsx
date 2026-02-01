@@ -16,6 +16,7 @@ import StatisticsPage from './pages/StatisticsPage';
 import TutorialsPage from './pages/TutorialsPage';
 import TutorialDetailPage from './pages/TutorialDetailPage';
 import TechniqueLearningPage from './pages/TechniqueLearningPage';
+import ProfilePage from './pages/ProfilePage';
 import Login from './components/Auth/Login';
 import Register from './components/Auth/Register';
 
@@ -24,7 +25,7 @@ const ProtectedRoute = ({ children }) => {
     const { isAuthenticated, loading } = useAuth();
 
     if (loading) {
-        return <div className="loading">Loading...</div>;
+        return <div className="loading">Memuat...</div>;
     }
 
     return isAuthenticated() ? children : <Navigate to="/login" />;
@@ -35,7 +36,7 @@ const PublicRoute = ({ children }) => {
     const { isAuthenticated, loading } = useAuth();
 
     if (loading) {
-        return <div className="loading">Loading...</div>;
+        return <div className="loading">Memuat...</div>;
     }
 
     return !isAuthenticated() ? children : <Navigate to="/" />;
@@ -94,6 +95,16 @@ function AppRoutes() {
             
             {/* Technique Learning - Public */}
             <Route path="/learn-techniques" element={<TechniqueLearningPage />} />
+
+            {/* Profile - Protected */}
+            <Route
+                path="/profile"
+                element={
+                    <ProtectedRoute>
+                        <ProfilePage />
+                    </ProtectedRoute>
+                }
+            />
 
             {/* Catch all - redirect to home */}
             <Route path="*" element={<Navigate to="/" />} />

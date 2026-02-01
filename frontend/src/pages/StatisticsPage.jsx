@@ -32,7 +32,7 @@ const StatisticsPage = () => {
             setAchievements(achievs);
             setLeaderboard(leaders);
         } catch (err) {
-            setError(err.response?.data?.error || 'Failed to load statistics');
+            setError(err.response?.data?.error || 'Gagal memuat statistik');
         } finally {
             setLoading(false);
         }
@@ -53,21 +53,21 @@ const StatisticsPage = () => {
         const mins = Math.floor((seconds % 3600) / 60);
         const secs = seconds % 60;
         if (hours > 0) {
-            return `${hours}h ${mins}m`;
+            return `${hours}j ${mins}m`;
         }
-        return `${mins}m ${secs}s`;
+        return `${mins}m ${secs}d`;
     };
 
     if (loading) {
-        return <div className="loading-container">Loading statistics...</div>;
+        return <div className="loading-container">Memuat statistik...</div>;
     }
 
     if (error) {
         return (
             <div className="error-container">
-                <h2>Error</h2>
+                <h2>Kesalahan</h2>
                 <p>{error}</p>
-                <button onClick={() => navigate('/')}>Back to Home</button>
+                <button onClick={() => navigate('/')}>Kembali ke Beranda</button>
             </div>
         );
     }
@@ -76,7 +76,7 @@ const StatisticsPage = () => {
         <div className="statistics-page">
             <div className="statistics-container">
                 <div className="stats-header">
-                    <h1>📊 Your Statistics</h1>
+                    <h1>📊 Statistik Anda</h1>
                 </div>
 
                 {/* Overview Cards */}
@@ -84,7 +84,7 @@ const StatisticsPage = () => {
                     <div className="stat-card">
                         <div className="stat-icon">🎮</div>
                         <div className="stat-info">
-                            <div className="stat-label">Total Games</div>
+                            <div className="stat-label">Total Permainan</div>
                             <div className="stat-value">{statistics.totalGames}</div>
                         </div>
                     </div>
@@ -92,7 +92,7 @@ const StatisticsPage = () => {
                     <div className="stat-card">
                         <div className="stat-icon">🏆</div>
                         <div className="stat-info">
-                            <div className="stat-label">Win Rate</div>
+                            <div className="stat-label">Tingkat Kemenangan</div>
                             <div className="stat-value">{statistics.winRate}%</div>
                         </div>
                     </div>
@@ -100,7 +100,7 @@ const StatisticsPage = () => {
                     <div className="stat-card">
                         <div className="stat-icon">⏱️</div>
                         <div className="stat-info">
-                            <div className="stat-label">Avg Time</div>
+                            <div className="stat-label">Rata-rata Waktu</div>
                             <div className="stat-value">{formatTime(statistics.avgTime)}</div>
                         </div>
                     </div>
@@ -108,19 +108,19 @@ const StatisticsPage = () => {
                     <div className="stat-card">
                         <div className="stat-icon">🔥</div>
                         <div className="stat-info">
-                            <div className="stat-label">Current Streak</div>
+                            <div className="stat-label">Streak Saat Ini</div>
                             <div className="stat-value">{statistics.currentStreak}</div>
-                            <div className="stat-sublabel">Best: {statistics.longestStreak}</div>
+                            <div className="stat-sublabel">Terbaik: {statistics.longestStreak}</div>
                         </div>
                     </div>
                 </div>
 
-                {/* Achievements */}
+                {/* Pencapaian */}
                 <div className="stats-section">
-                    <h2>🏅 Achievements</h2>
+                    <h2>🏅 Pencapaian</h2>
                     <div className="achievements-grid">
                         {achievements.map(achievement => (
-                            <div 
+                            <div
                                 key={achievement.id}
                                 className={`achievement-card ${achievement.unlocked ? 'unlocked' : 'locked'}`}
                             >
@@ -132,7 +132,7 @@ const StatisticsPage = () => {
                                     <div className="achievement-desc">{achievement.description}</div>
                                     {achievement.unlocked && achievement.unlockedAt && (
                                         <div className="achievement-date">
-                                            Unlocked: {new Date(achievement.unlockedAt).toLocaleDateString()}
+                                            Terbuka: {new Date(achievement.unlockedAt).toLocaleDateString('id-ID')}
                                         </div>
                                     )}
                                 </div>
@@ -143,7 +143,7 @@ const StatisticsPage = () => {
 
                 {/* Best Times */}
                 <div className="stats-section">
-                    <h2>⚡ Best Times by Difficulty</h2>
+                    <h2>⚡ Waktu Terbaik per Kesulitan</h2>
                     <div className="best-times">
                         {['very-easy', 'easy', 'medium', 'hard', 'expert'].map(diff => {
                             const time = statistics.bestTimes?.[diff];
@@ -151,13 +151,16 @@ const StatisticsPage = () => {
                             return (
                                 <div key={diff} className="time-row">
                                     <div className="difficulty-badge" data-difficulty={diff}>
-                                        {diff.replace('-', ' ')}
+                                        {diff === 'very-easy' ? 'Sangat Mudah' :
+                                         diff === 'easy' ? 'Mudah' :
+                                         diff === 'medium' ? 'Sedang' :
+                                         diff === 'hard' ? 'Sulit' : 'Ahli'}
                                     </div>
                                     <div className="time-value">
-                                        {time ? formatTime(time) : 'Not played'}
+                                        {time ? formatTime(time) : 'Belum dimainkan'}
                                     </div>
                                     <div className="games-count">
-                                        {games} games
+                                        {games} permainan
                                     </div>
                                 </div>
                             );
@@ -167,19 +170,19 @@ const StatisticsPage = () => {
 
                 {/* Leaderboard */}
                 <div className="stats-section">
-                    <h2>👑 Leaderboard</h2>
+                    <h2>👑 Papan Peringkat</h2>
                     <div className="leaderboard-tabs">
-                        <button 
+                        <button
                             className={`tab ${leaderboardType === 'score' ? 'active' : ''}`}
                             onClick={() => loadLeaderboard('score')}
                         >
-                            Score
+                            Skor
                         </button>
-                        <button 
+                        <button
                             className={`tab ${leaderboardType === 'speed' ? 'active' : ''}`}
                             onClick={() => loadLeaderboard('speed')}
                         >
-                            Speed
+                            Kecepatan
                         </button>
                     </div>
                     <div className="leaderboard-table">
@@ -187,10 +190,10 @@ const StatisticsPage = () => {
                             <table>
                                 <thead>
                                     <tr>
-                                        <th>Rank</th>
-                                        <th>Player</th>
-                                        <th>{leaderboardType === 'score' ? 'Score' : 'Time'}</th>
-                                        <th>Difficulty</th>
+                                        <th>Peringkat</th>
+                                        <th>Pemain</th>
+                                        <th>{leaderboardType === 'score' ? 'Skor' : 'Waktu'}</th>
+                                        <th>Kesulitan</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -204,16 +207,19 @@ const StatisticsPage = () => {
                                             </td>
                                             <td className="username">{entry.username}</td>
                                             <td className="value">
-                                                {leaderboardType === 'score' 
-                                                    ? entry.score 
+                                                {leaderboardType === 'score'
+                                                    ? entry.score
                                                     : formatTime(entry.time)}
                                             </td>
                                             <td>
-                                                <span 
-                                                    className="difficulty-badge small" 
+                                                <span
+                                                    className="difficulty-badge small"
                                                     data-difficulty={entry.difficulty}
                                                 >
-                                                    {entry.difficulty}
+                                                    {entry.difficulty === 'very-easy' ? 'Sangat Mudah' :
+                                                     entry.difficulty === 'easy' ? 'Mudah' :
+                                                     entry.difficulty === 'medium' ? 'Sedang' :
+                                                     entry.difficulty === 'hard' ? 'Sulit' : 'Ahli'}
                                                 </span>
                                             </td>
                                         </tr>
@@ -222,7 +228,7 @@ const StatisticsPage = () => {
                             </table>
                         ) : (
                             <div className="empty-state">
-                                No leaderboard entries yet
+                                Belum ada data papan peringkat
                             </div>
                         )}
                     </div>

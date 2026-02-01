@@ -53,11 +53,11 @@ const TechniqueLearning = () => {
     const getCategoryDisplay = (category) => {
         switch (category) {
             case 'basic':
-                return 'Beginner';
+                return 'Pemula';
             case 'intermediate':
-                return 'Intermediate';
+                return 'Menengah';
             case 'advanced':
-                return 'Advanced';
+                return 'Lanjutan';
             default:
                 return category;
         }

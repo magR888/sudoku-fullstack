@@ -35,7 +35,7 @@ const TutorialsPage = () => {
                 // User not authenticated, continue without progress
             }
         } catch (err) {
-            setError(err.response?.data?.error || 'Failed to load tutorials');
+            setError(err.response?.data?.error || 'Gagal memuat tutorial');
         } finally {
             setLoading(false);
         }
@@ -51,15 +51,15 @@ const TutorialsPage = () => {
     };
 
     if (loading) {
-        return <div className="loading-container">Loading tutorials...</div>;
+        return <div className="loading-container">Memuat tutorial...</div>;
     }
 
     if (error) {
         return (
             <div className="error-container">
-                <h2>Error</h2>
+                <h2>Kesalahan</h2>
                 <p>{error}</p>
-                <button onClick={() => navigate('/')}>Back to Home</button>
+                <button onClick={() => navigate('/')}>Kembali ke Beranda</button>
             </div>
         );
     }
@@ -68,9 +68,9 @@ const TutorialsPage = () => {
         <div className="tutorials-page">
             <div className="tutorials-container">
                 <div className="tutorials-header">
-                    <h1>📚 Sudoku Tutorials</h1>
+                    <h1>📚 Tutorial Sudoku</h1>
                     <p className="tutorials-subtitle">
-                        Learn Sudoku step by step, from basics to advanced techniques
+                        Belajar Sudoku langkah demi langkah, dari dasar hingga teknik lanjutan
                     </p>
                 </div>
 
@@ -100,7 +100,7 @@ const TutorialsPage = () => {
                                             {tutorial.difficulty}
                                         </span>
                                         <span className="tutorial-duration">
-                                            ⏱️ {tutorial.duration_minutes} min
+                                            ⏱️ {tutorial.duration_minutes} menit
                                         </span>
                                     </div>
 
@@ -113,7 +113,7 @@ const TutorialsPage = () => {
                                                 />
                                             </div>
                                             <div className="progress-text">
-                                                {isCompleted ? '✓ Completed' : `${percentage}% complete`}
+                                                {isCompleted ? '✓ Selesai' : `${percentage}% selesai`}
                                             </div>
                                         </div>
                                     )}

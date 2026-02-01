@@ -27,13 +27,13 @@ const register = async (req, res) => {
         // Validation
         if (!email || !username || !password) {
             return res.status(400).json({ 
-                error: 'Email, username, and password are required' 
+                error: 'Email, nama pengguna, dan kata sandi wajib diisi' 
             });
         }
         
         if (password.length < 6) {
             return res.status(400).json({ 
-                error: 'Password must be at least 6 characters' 
+                error: 'Kata sandi minimal 6 karakter' 
             });
         }
         
@@ -45,7 +45,7 @@ const register = async (req, res) => {
         
         if (existingUser.rows.length > 0) {
             return res.status(409).json({ 
-                error: 'Email or username already exists' 
+                error: 'Email atau nama pengguna sudah terdaftar' 
             });
         }
         
@@ -83,7 +83,7 @@ const register = async (req, res) => {
         const token = generateToken(result);
         
         res.status(201).json({
-            message: 'User registered successfully',
+            message: 'Pengguna berhasil terdaftar',
             token,
             user: {
                 id: result.id,
@@ -96,7 +96,7 @@ const register = async (req, res) => {
         
     } catch (error) {
         console.error('Register error:', error);
-        res.status(500).json({ error: 'Registration failed' });
+        res.status(500).json({ error: 'Pendaftaran gagal' });
     }
 };
 
@@ -108,7 +108,7 @@ const login = async (req, res) => {
         // Validation
         if (!email || !password) {
             return res.status(400).json({ 
-                error: 'Email and password are required' 
+                error: 'Email dan kata sandi wajib diisi' 
             });
         }
         
@@ -122,7 +122,7 @@ const login = async (req, res) => {
         
         if (result.rows.length === 0) {
             return res.status(401).json({ 
-                error: 'Invalid email or password' 
+                error: 'Email atau kata sandi salah' 
             });
         }
         
@@ -131,7 +131,7 @@ const login = async (req, res) => {
         // Check if user is active
         if (!user.is_active) {
             return res.status(403).json({ 
-                error: 'Account is deactivated. Please contact support.' 
+                error: 'Akun dinonaktifkan. Silakan hubungi dukungan.' 
             });
         }
         
@@ -140,7 +140,7 @@ const login = async (req, res) => {
         
         if (!isMatch) {
             return res.status(401).json({ 
-                error: 'Invalid email or password' 
+                error: 'Email atau kata sandi salah' 
             });
         }
         
@@ -154,7 +154,7 @@ const login = async (req, res) => {
         const token = generateToken(user);
         
         res.json({
-            message: 'Login successful',
+            message: 'Berhasil masuk',
             token,
             user: {
                 id: user.id,
@@ -167,7 +167,7 @@ const login = async (req, res) => {
         
     } catch (error) {
         console.error('Login error:', error);
-        res.status(500).json({ error: 'Login failed' });
+        res.status(500).json({ error: 'Gagal masuk' });
     }
 };
 
@@ -188,20 +188,20 @@ const me = async (req, res) => {
         );
         
         if (result.rows.length === 0) {
-            return res.status(404).json({ error: 'User not found' });
+            return res.status(404).json({ error: 'Pengguna tidak ditemukan' });
         }
         
         res.json({ user: result.rows[0] });
         
     } catch (error) {
         console.error('Get user error:', error);
-        res.status(500).json({ error: 'Failed to get user' });
+        res.status(500).json({ error: 'Gagal mendapatkan data pengguna' });
     }
 };
 
 // Logout (client-side mainly)
 const logout = async (req, res) => {
-    res.json({ message: 'Logout successful' });
+    res.json({ message: 'Berhasil keluar' });
 };
 
 // Guest login - create temporary guest account
@@ -247,7 +247,7 @@ const guestLogin = async (req, res) => {
         const token = generateToken(result);
         
         res.status(201).json({
-            message: 'Guest login successful',
+            message: 'Berhasil masuk sebagai tamu',
             token,
             user: {
                 id: result.id,
@@ -261,7 +261,7 @@ const guestLogin = async (req, res) => {
         
     } catch (error) {
         console.error('Guest login error:', error);
-        res.status(500).json({ error: 'Guest login failed' });
+        res.status(500).json({ error: 'Gagal masuk sebagai tamu' });
     }
 };
 
@@ -271,7 +271,7 @@ const refresh = async (req, res) => {
         const { token } = req.body;
         
         if (!token) {
-            return res.status(400).json({ error: 'Token required' });
+            return res.status(400).json({ error: 'Token diperlukan' });
         }
         
         // Verify old token (allow expired)
@@ -286,7 +286,7 @@ const refresh = async (req, res) => {
         );
         
         if (result.rows.length === 0) {
-            return res.status(401).json({ error: 'User not found or inactive' });
+            return res.status(401).json({ error: 'Pengguna tidak ditemukan atau tidak aktif' });
         }
         
         // Generate new token
@@ -296,7 +296,7 @@ const refresh = async (req, res) => {
         
     } catch (error) {
         console.error('Refresh token error:', error);
-        res.status(401).json({ error: 'Invalid token' });
+        res.status(401).json({ error: 'Token tidak valid' });
     }
 };
 

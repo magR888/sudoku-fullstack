@@ -18,7 +18,7 @@ const getAllTutorials = async (req, res) => {
 
     } catch (error) {
         console.error('Get tutorials error:', error);
-        res.status(500).json({ error: 'Failed to get tutorials' });
+        res.status(500).json({ error: 'Gagal memuat tutorial' });
     }
 };
 
@@ -38,7 +38,7 @@ const getTutorial = async (req, res) => {
         );
 
         if (tutorialResult.rows.length === 0) {
-            return res.status(404).json({ error: 'Tutorial not found' });
+            return res.status(404).json({ error: 'Tutorial tidak ditemukan' });
         }
 
         const tutorial = tutorialResult.rows[0];
@@ -67,7 +67,7 @@ const getTutorial = async (req, res) => {
 
     } catch (error) {
         console.error('Get tutorial error:', error);
-        res.status(500).json({ error: 'Failed to get tutorial' });
+        res.status(500).json({ error: 'Gagal memuat tutorial' });
     }
 };
 
@@ -91,7 +91,7 @@ const getUserProgress = async (req, res) => {
 
     } catch (error) {
         console.error('Get user progress error:', error);
-        res.status(500).json({ error: 'Failed to get progress' });
+        res.status(500).json({ error: 'Gagal memuat progres' });
     }
 };
 
@@ -120,13 +120,13 @@ const updateProgress = async (req, res) => {
         );
 
         res.json({
-            message: 'Progress updated',
+            message: 'Progres diperbarui',
             progress: result.rows[0]
         });
 
     } catch (error) {
         console.error('Update progress error:', error);
-        res.status(500).json({ error: 'Failed to update progress' });
+        res.status(500).json({ error: 'Gagal memperbarui progres' });
     }
 };
 
@@ -152,13 +152,13 @@ const submitQuiz = async (req, res) => {
         );
 
         res.json({
-            message: 'Quiz submitted successfully',
+            message: 'Kuis berhasil dikirim',
             score
         });
 
     } catch (error) {
         console.error('Submit quiz error:', error);
-        res.status(500).json({ error: 'Failed to submit quiz' });
+        res.status(500).json({ error: 'Gagal mengirim kuis' });
     }
 };
 

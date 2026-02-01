@@ -61,7 +61,7 @@ const getMyStatistics = async (req, res) => {
 
     } catch (error) {
         console.error('Get statistics error:', error);
-        res.status(500).json({ error: 'Failed to get statistics' });
+        res.status(500).json({ error: 'Gagal memuat statistik' });
     }
 };
 
@@ -99,7 +99,7 @@ const getAchievements = async (req, res) => {
 
     } catch (error) {
         console.error('Get achievements error:', error);
-        res.status(500).json({ error: 'Failed to get achievements' });
+        res.status(500).json({ error: 'Gagal memuat pencapaian' });
     }
 };
 
@@ -153,7 +153,7 @@ const getLeaderboard = async (req, res) => {
 
     } catch (error) {
         console.error('Get leaderboard error:', error);
-        res.status(500).json({ error: 'Failed to get leaderboard' });
+        res.status(500).json({ error: 'Gagal memuat papan peringkat' });
     }
 };
 

@@ -14,11 +14,11 @@ const Home = () => {
     const navigate = useNavigate();
 
     const difficulties = [
-        { value: 'very-easy', label: 'Very Easy', color: '#10B981', clues: '51 clues' },
-        { value: 'easy', label: 'Easy', color: '#3B82F6', clues: '41 clues' },
-        { value: 'medium', label: 'Medium', color: '#F59E0B', clues: '31 clues' },
-        { value: 'hard', label: 'Hard', color: '#EF4444', clues: '26 clues' },
-        { value: 'expert', label: 'Expert', color: '#8B5CF6', clues: '21 clues' }
+        { value: 'very-easy', label: 'Sangat Mudah', color: '#10B981', clues: '51 petunjuk' },
+        { value: 'easy', label: 'Mudah', color: '#3B82F6', clues: '41 petunjuk' },
+        { value: 'medium', label: 'Sedang', color: '#F59E0B', clues: '31 petunjuk' },
+        { value: 'hard', label: 'Sulit', color: '#EF4444', clues: '26 petunjuk' },
+        { value: 'expert', label: 'Ahli', color: '#8B5CF6', clues: '21 petunjuk' }
     ];
 
     const handleStartGame = async () => {
@@ -29,7 +29,7 @@ const Home = () => {
             const game = await gameService.createGame(difficulty);
             navigate(`/game/${game.id}`);
         } catch (err) {
-            setError(err.response?.data?.error || 'Failed to create game');
+            setError(err.response?.data?.error || 'Gagal membuat permainan');
         } finally {
             setLoading(false);
         }
@@ -38,13 +38,13 @@ const Home = () => {
     return (
         <div className="home-container">
             <div className="home-content">
-                <h1 className="home-title">🎓 Sudoku Learning Platform</h1>
+                <h1 className="home-title">🎓 Platform Belajar Sudoku</h1>
                 <p className="home-subtitle">
-                    Learn, Practice, and Master Sudoku!
+                    Belajar, Berlatih, dan Kuasai Sudoku!
                 </p>
 
                 <div className="difficulty-selector">
-                    <h2>Select Difficulty</h2>
+                    <h2>Pilih Tingkat Kesulitan</h2>
                     <div className="difficulty-grid">
                         {difficulties.map(diff => (
                             <button
@@ -74,7 +74,7 @@ const Home = () => {
                     onClick={handleStartGame}
                     disabled={loading}
                 >
-                    {loading ? 'Creating Game...' : '🎮 Start New Game'}
+                    {loading ? 'Membuat Permainan...' : '🎮 Mulai Permainan Baru'}
                 </button>
             </div>
         </div>

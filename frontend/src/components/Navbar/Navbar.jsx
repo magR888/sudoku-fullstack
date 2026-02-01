@@ -14,11 +14,15 @@ const Navbar = () => {
     const isActive = (path) => location.pathname === path;
     const isGuest = user?.is_guest;
 
+    if (!isAuthenticated()) {
+        return null;
+    }
+
     return (
         <nav className="navbar">
             <div className="navbar-container">
                 <Link to="/" className="navbar-brand">
-                    🎓 Sudoku Learning
+                    🎓 Belajar Sudoku
                 </Link>
 
                 <div className="navbar-links">
@@ -26,52 +30,47 @@ const Navbar = () => {
                         to="/"
                         className={`navbar-link ${isActive('/') ? 'active' : ''}`}
                     >
-                        🏠 Home
+                        🏠 Beranda
                     </Link>
                     <Link
                         to="/tutorials"
                         className={`navbar-link ${isActive('/tutorials') ? 'active' : ''}`}
                     >
-                        📚 Tutorials
+                        📚 Tutorial
                     </Link>
                     {!isGuest && (
                         <Link
                             to="/learn-techniques"
                             className={`navbar-link ${isActive('/learn-techniques') ? 'active' : ''}`}
                         >
-                            🎯 Techniques
+                            🎯 Teknik
                         </Link>
                     )}
-                    {isAuthenticated() && !isGuest && (
+                    {!isGuest && (
                         <Link
                             to="/statistics"
                             className={`navbar-link ${isActive('/statistics') ? 'active' : ''}`}
                         >
-                            📊 Statistics
+                            📊 Statistik
                         </Link>
                     )}
                 </div>
 
                 <div className="navbar-auth">
-                    {isAuthenticated() ? (
-                        <>
-                            <span className="navbar-user">
-                                👤 {user?.username}
-                            </span>
-                            <button className="navbar-logout" onClick={logout}>
-                                Logout
-                            </button>
-                        </>
-                    ) : (
-                        <>
-                            <Link to="/login" className="navbar-link">
-                                Login
-                            </Link>
-                            <Link to="/register" className="navbar-btn">
-                                Register
-                            </Link>
-                        </>
+                    {!isGuest && (
+                        <Link
+                            to="/profile"
+                            className={`navbar-link ${isActive('/profile') ? 'active' : ''}`}
+                        >
+                            👤 Profil
+                        </Link>
                     )}
+                    <span className="navbar-user">
+                        {user?.username}
+                    </span>
+                    <button className="navbar-logout" onClick={logout}>
+                        Keluar
+                    </button>
                 </div>
             </div>
         </nav>

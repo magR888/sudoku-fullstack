@@ -24,7 +24,7 @@ const TutorialDetailPage = () => {
             const data = await tutorialService.getTutorial(id);
             setTutorial(data);
         } catch (err) {
-            setError(err.response?.data?.error || 'Failed to load tutorial');
+            setError(err.response?.data?.error || 'Gagal memuat tutorial');
         } finally {
             setLoading(false);
         }
@@ -36,7 +36,7 @@ const TutorialDetailPage = () => {
                 completed: true,
                 progressPercentage: 100
             });
-            alert('Tutorial completed! 🎉');
+            alert('Tutorial selesai! 🎉');
             navigate('/tutorials');
         } catch (err) {
             console.error('Failed to mark complete:', err);
@@ -56,15 +56,15 @@ const TutorialDetailPage = () => {
     };
 
     if (loading) {
-        return <div className="loading-container">Loading tutorial...</div>;
+        return <div className="loading-container">Memuat tutorial...</div>;
     }
 
     if (error) {
         return (
             <div className="error-container">
-                <h2>Error</h2>
+                <h2>Kesalahan</h2>
                 <p>{error}</p>
-                <button onClick={() => navigate('/tutorials')}>Back to Tutorials</button>
+                <button onClick={() => navigate('/tutorials')}>Kembali ke Tutorial</button>
             </div>
         );
     }
@@ -81,7 +81,7 @@ const TutorialDetailPage = () => {
                         className="btn-back"
                         onClick={() => navigate('/tutorials')}
                     >
-                        ← Back to Tutorials
+                        ← Kembali ke Tutorial
                     </button>
                     <h1>{tutorial.title}</h1>
                     <div className="tutorial-meta">
@@ -89,7 +89,7 @@ const TutorialDetailPage = () => {
                             📊 {tutorial.difficulty}
                         </span>
                         <span className="meta-item">
-                            ⏱️ {tutorial.duration_minutes} minutes
+                            ⏱️ {tutorial.duration_minutes} menit
                         </span>
                     </div>
                 </div>
@@ -118,7 +118,7 @@ const TutorialDetailPage = () => {
 
                     {section.example && (
                         <div className="section-example">
-                            <h3>📝 Example:</h3>
+                            <h3>📝 Contoh:</h3>
                             <div className="example-content">
                                 {section.example}
                             </div>
@@ -127,7 +127,7 @@ const TutorialDetailPage = () => {
 
                     {section.tips && section.tips.length > 0 && (
                         <div className="section-tips">
-                            <h3>💡 Tips:</h3>
+                            <h3>💡 Kiat:</h3>
                             <ul>
                                 {section.tips.map((tip, index) => (
                                     <li key={index}>{tip}</li>
@@ -144,7 +144,7 @@ const TutorialDetailPage = () => {
                         onClick={handlePrevious}
                         disabled={currentSection === 0}
                     >
-                        ← Previous
+                        ← Sebelumnya
                     </button>
 
                     <span className="section-indicator">
@@ -156,14 +156,14 @@ const TutorialDetailPage = () => {
                             className="btn btn-primary"
                             onClick={handleNext}
                         >
-                            Next →
+                            Selanjutnya →
                         </button>
                     ) : (
                         <button 
                             className="btn btn-success"
                             onClick={handleComplete}
                         >
-                            Complete Tutorial ✓
+                            Selesaikan Tutorial ✓
                         </button>
                     )}
                 </div>

@@ -36,7 +36,7 @@ const getAllTechniques = async (req, res) => {
 
     } catch (error) {
         console.error('Get techniques error:', error);
-        res.status(500).json({ error: 'Failed to get techniques' });
+        res.status(500).json({ error: 'Gagal memuat teknik' });
     }
 };
 
@@ -57,7 +57,7 @@ const getTechnique = async (req, res) => {
         );
 
         if (techniqueResult.rows.length === 0) {
-            return res.status(404).json({ error: 'Technique not found' });
+            return res.status(404).json({ error: 'Teknik tidak ditemukan' });
         }
 
         const technique = techniqueResult.rows[0];
@@ -86,7 +86,7 @@ const getTechnique = async (req, res) => {
 
     } catch (error) {
         console.error('Get technique error:', error);
-        res.status(500).json({ error: 'Failed to get technique' });
+        res.status(500).json({ error: 'Gagal memuat teknik' });
     }
 };
 
@@ -110,7 +110,7 @@ const getUserMastery = async (req, res) => {
 
     } catch (error) {
         console.error('Get user mastery error:', error);
-        res.status(500).json({ error: 'Failed to get mastery' });
+        res.status(500).json({ error: 'Gagal memuat penguasaan' });
     }
 };
 
@@ -127,7 +127,7 @@ const recordPractice = async (req, res) => {
         );
 
         if (techniqueResult.rows.length === 0) {
-            return res.status(404).json({ error: 'Technique not found' });
+            return res.status(404).json({ error: 'Teknik tidak ditemukan' });
         }
 
         const techniqueId = techniqueResult.rows[0].id;
@@ -147,13 +147,13 @@ const recordPractice = async (req, res) => {
         );
 
         res.json({
-            message: 'Practice recorded',
+            message: 'Latihan tercatat',
             mastery: result.rows[0]
         });
 
     } catch (error) {
         console.error('Record practice error:', error);
-        res.status(500).json({ error: 'Failed to record practice' });
+        res.status(500).json({ error: 'Gagal mencatat latihan' });
     }
 };
 
